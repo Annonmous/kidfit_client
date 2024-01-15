@@ -8,6 +8,7 @@ import 'package:foodeoapp/components/custom_textfiled.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/navigation.dart';
 import 'package:foodeoapp/constant/theme.dart';
+import 'package:foodeoapp/services/app_service.dart';
 import 'package:get/get.dart';
 import '../../../components/round_button.dart';
 import '../../../constant/flutter_toast.dart';
@@ -78,9 +79,7 @@ class LoginWithEmail extends StatelessWidget {
                               inputType: TextInputType.emailAddress,
                               focusNode: _emailFocusNode,
                               onsubmit: () {},
-                              onchange: (value) {
-                     
-                              },
+                              onchange: (value) {},
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter an email address';
@@ -103,9 +102,7 @@ class LoginWithEmail extends StatelessWidget {
                                   obscureText: showpassword.value,
                                   focusNode: _passwordFocusNode,
                                   onsubmit: () {},
-                                  onchange: (value) {
-                   
-                                  },
+                                  onchange: (value) {},
                                   validator: (input) => input!.length < 3
                                       ? 'Please enter at least 3 characters'
                                       : input.length > 20
@@ -143,20 +140,20 @@ class LoginWithEmail extends StatelessWidget {
                               await internetController.internetCheckerFun();
 
                               if (_formkey.currentState!.validate()) {
-                                if (internetController
-                                        .isInternetConnected.value ==
-                                    true) {
-                                  apihitting.value = true;
-                                  Navigation.getInstance.screenNavigation(
-                                      context, BottomNavBar());
-                                  // controller.loginWithEmail(
-                                  //     context,
-                                  //     controller.emailController.value.text,
-                                  //     controller.passwordController.value.text);
-                                } else {
-                                  FlutterToastDisplay.getInstance
-                                      .showToast("Please check your internet");
-                                }
+                                // if (internetController
+                                //         .isInternetConnected.value ==
+                                //     true) {
+                                apihitting.value = true;
+
+                                AppService.getInstance.login(
+                                    context,
+                                    emailController.text,
+                                    PasswordController.text);
+
+                                // } else {
+                                //   FlutterToastDisplay.getInstance
+                                //       .showToast("Please check your internet");
+                                // }
                               }
                             },
                           )),

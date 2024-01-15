@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:foodeoapp/MVC/model/userModel.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,24 +41,24 @@ class DataStroge extends GetxController {
     AppService.getInstance.updateDioHeaders();
   }
 
-  insertUserData({token, id, name, email, role, phone, image}) async {
+  insertUserData(UserModel userData,String token) async {
     final SharedPreferences? prefs = await _prefs;
 
     await prefs?.setString('token', token);
-    await prefs?.setString('id', id.toString());
-    await prefs?.setString('name', name);
-    await prefs?.setString('email', email);
-    await prefs?.setString('phone_number', phone);
-    await prefs?.setString('role', role);
-    await prefs?.setString('image', image);
+    await prefs?.setString('id', userData.id.toString());
+    await prefs?.setString('name', userData.name);
+    await prefs?.setString('email', userData.email);
+    // await prefs?.setString('phone_number', userData.phone);
+    await prefs?.setString('role', userData.userRole.toString());
+    // await prefs?.setString('image', image);
     await initiateSession();
-    userName.value = name;
-    userEmail.value = email;
-    userImage.value = image;
-    userRole.value = role;
-    userPhone.value = phone;
+    userName.value = userData.name;
+    userEmail.value = userData.email;
+    // userImage.value = image;
+    userRole.value = userData.userRole;
+    // userPhone.value = phone;
     userToken.value = token;
-    currentUserId.value = id.toString();
+    currentUserId.value = userData.id.toString();
   }
 
   insertDeviceAndFCMInformation({FcmToken, deviceID}) async {
