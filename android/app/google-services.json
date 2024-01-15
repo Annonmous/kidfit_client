@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "698727642719",
+    "project_id": "foodeo-10097",
+    "storage_bucket": "foodeo-10097.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698727642719:android:b14edf2a920de711e58dea",
+        "android_client_info": {
+          "package_name": "com.example.foodeoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698727642719-2jahq23dfjd1k8212vc1o8qb0suhomii.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodeoapp",
+            "certificate_hash": "a170d3663a32353bd895e2107f244e48eaa5e3d5"
+          }
+        },
+        {
+          "client_id": "698727642719-19p1578a5nq9qm0f9jfdm0c3jos5kd4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8vmnf2HsxDaDcqIMUsH5y4lOjlyjsF9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698727642719-19p1578a5nq9qm0f9jfdm0c3jos5kd4t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "698727642719-dhejqs1i99i26pit9qbrg5hsnd47emd8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodeoapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
