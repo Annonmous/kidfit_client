@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodeoapp/MVC/controller/homeController.dart';
 import 'package:foodeoapp/constant/theme.dart';
 import 'package:get/get.dart';
 import '../constant/constants.dart';
@@ -28,11 +29,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? leadingColor;
   final Function()? Ontapleading;
   final themecontroller = Get.put(ThemeHelper());
+  final homecontroller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     final themeController = Get.put(ThemeHelper());
+
     return AppBar(
+      elevation: 0.0,
       backgroundColor: backgroundColor ?? themeController.bgcolor,
       centerTitle: true,
       leading: GestureDetector(
@@ -45,7 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               const EdgeInsets.symmetric(horizontal: Constants.screenPadding),
           child: Icon(
             leading ?? Icons.menu,
-            color:leadingColor ??  themecontroller.colorPrimary,
+            color: leadingColor ?? themecontroller.colorPrimary,
             size: 25.sp,
           ),
         ),
@@ -62,16 +66,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ? SpringWidget(
                 onTap: () {},
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Constants.screenPadding),
-                  child: Badge(
-                    backgroundColor: themeController.colorPrimary,
-                    label: Text('2'),
-                    child: SvgPicture.asset(
-                      'assets/icons/shop.svg',
-                      color:
-                      leadingColor ?? themeController.colorPrimary,
-                      height: 20.sp,
+                  padding: EdgeInsets.symmetric(
+                      vertical: 10.sp, horizontal: Constants.screenPadding),
+                  child: Obx(
+                    () => Badge(
+                      backgroundColor: themeController.colorPrimary,
+                      label: Text(homecontroller.CartList.length.toString()),
+                      child: SvgPicture.asset(
+                        'assets/icons/shop.svg',
+                        color: leadingColor ?? themeController.colorPrimary,
+                        height: 20.sp,
+                      ),
                     ),
                   ),
                 ),
@@ -82,5 +87,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(40.sp);
+  Size get preferredSize => Size.fromHeight(50.sp);
 }

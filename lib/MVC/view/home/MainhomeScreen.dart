@@ -74,11 +74,28 @@ class HomeScreen extends StatelessWidget {
                                                   itemBuilder:
                                                       (BuildContext context,
                                                           int index) {
-                                                    return ListTile(
-                                                      title: Text(kidController
-                                                          .KidsList[index]
-                                                          .name),
-                                                          
+                                                    return SpringWidget(
+                                                      onTap: () {
+                                                        homeController
+                                                                .SelectedKidId
+                                                                .value =
+                                                            kidController
+                                                                .KidsList[index]
+                                                                .id;
+
+                                                        homeController
+                                                                .SelectedKidName
+                                                                .value =
+                                                            kidController
+                                                                .KidsList[index]
+                                                                .name;
+                                                      },
+                                                      child: ListTile(
+                                                        title: Text(
+                                                            kidController
+                                                                .KidsList[index]
+                                                                .name),
+                                                      ),
                                                     );
                                                   },
                                                 ),
@@ -99,11 +116,16 @@ class HomeScreen extends StatelessWidget {
                                     color: themeController.colorIcon
                                         .withOpacity(0.4),
                                   ),
-                                  title: Text(
-                                    'Select Children..',
-                                    style: TextStyle(
-                                        color: themeController.textcolor,
-                                        fontSize: 12.sp),
+                                  title: Obx(
+                                    () => Text(
+                                      homeController.SelectedKidName.value == ''
+                                          ? 'Select Children..'
+                                          : homeController
+                                              .SelectedKidName.value,
+                                      style: TextStyle(
+                                          color: themeController.textcolor,
+                                          fontSize: 12.sp),
+                                    ),
                                   ),
                                 ),
                               ),

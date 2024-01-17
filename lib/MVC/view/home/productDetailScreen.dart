@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodeoapp/MVC/controller/homeController.dart';
+import 'package:foodeoapp/MVC/model/CartModel.dart';
 import 'package:foodeoapp/MVC/model/product_model.dart';
 import 'package:foodeoapp/components/ProductCard.dart';
 import 'package:foodeoapp/components/custom_appbar.dart';
@@ -10,6 +11,7 @@ import 'package:foodeoapp/components/round_button.dart';
 import 'package:foodeoapp/components/spring_widget.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/theme.dart';
+import 'package:foodeoapp/helper/data_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
@@ -109,7 +111,20 @@ class ProductDetailsScreen extends StatelessWidget {
                                     title: 'Add To Cart',
                                     iconColor: themeController.colorwhite,
                                     textColor: themeController.colorwhite,
-                                    onTap: () async {},
+                                    onTap: () async {
+                                      var cartData = CartModel(
+                                          kid_Id: homeController
+                                              .SelectedKidId.value,
+                                          parentId: 1,
+                                          product_id: ProductData.id,
+                                          product_name: ProductData.name,
+                                          product_image: ProductData.image,
+                                          Kid_name: homeController
+                                              .SelectedKidName.value);
+
+                                      homeController.addAndRemoveCart(
+                                          cartData, 1);
+                                    },
                                   ),
                                 ),
                                 Align(

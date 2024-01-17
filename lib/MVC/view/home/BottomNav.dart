@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter/material.dart';
 import 'package:foodeoapp/MVC/view/home/MainhomeScreen.dart';
 import 'package:foodeoapp/MVC/view/home/ProfileScreen.dart';
+import 'package:foodeoapp/MVC/view/home/cartScreen.dart';
 import 'package:foodeoapp/MVC/view/home/SearchScreen.dart';
 import 'package:foodeoapp/components/custom_appbar.dart';
 import 'package:foodeoapp/components/drawer.dart';
@@ -41,11 +42,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     backgroundColor: _currentIndex == 3
                         ? themeController.colorPrimary
                         : themeController.bgcolor,
-                        leadingColor: _currentIndex == 3
+                    leadingColor: _currentIndex == 3
                         ? Colors.white
                         : themeController.colorPrimary,
-                        titleColor:  _currentIndex == 3?
-                         Colors.white
+                    titleColor: _currentIndex == 3
+                        ? Colors.white
                         : themeController.textcolor,
                     Title: _PageTitle(_currentIndex),
                     showShop: true),
@@ -177,7 +178,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 1:
         return SearchScreen();
       case 2:
-        return HomeScreen();
+        return CartScreen();
       case 3:
         return ProfileScreen();
       default:

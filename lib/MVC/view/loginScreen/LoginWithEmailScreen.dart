@@ -144,11 +144,12 @@ class LoginWithEmail extends StatelessWidget {
                                 //         .isInternetConnected.value ==
                                 //     true) {
                                 apihitting.value = true;
-
-                                AppService.getInstance.login(
-                                    context,
-                                    emailController.text,
-                                    PasswordController.text);
+                                Navigation.getInstance
+                                    .screenNavigation(context, BottomNavBar());
+                                // AppService.getInstance.login(
+                                //     context,
+                                //     emailController.text,
+                                //     PasswordController.text);
 
                                 // } else {
                                 //   FlutterToastDisplay.getInstance

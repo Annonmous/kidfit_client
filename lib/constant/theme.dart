@@ -173,8 +173,8 @@ class ThemeHelper extends GetxController {
 
   SystemUiOverlayStyle get systemUiOverlayStyleForPrimary =>
       SystemUiOverlayStyle(
-        statusBarColor: const Color.fromARGB(255, 255, 228, 210),
-        systemNavigationBarColor: const Color.fromARGB(255, 253, 241, 232),
+        statusBarColor: Color.fromARGB(255, 248, 94, 86),
+        systemNavigationBarColor: Color(0xffffffff),
         statusBarIconBrightness:
             isDarkTheme.value ? Brightness.light : Brightness.dark,
         systemNavigationBarIconBrightness:
