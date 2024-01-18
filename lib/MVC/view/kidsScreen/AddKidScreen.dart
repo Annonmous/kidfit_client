@@ -44,71 +44,84 @@ class AddKidScreen extends StatelessWidget {
                     horizontal: Constants.screenPadding,
                     vertical: Constants.screenPadding),
                 child: Form(
-                  key: _formkey,
+                    key: _formkey,
                     child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomTextFieldWidget(
-                      enabled: true,
-                      label: '',
-                      controller: NameController,
-                      fieldColor: themecontroller.colorwhite,
-                      hintText: "Enter Name",
-                      inputType: TextInputType.name,
-                      focusNode: _NameFocusNode,
-                      onsubmit: () {},
-                      onchange: (value) {
-                        apihitting.value = true;
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter an Name';
-                        }
-
-                        return null;
-                      },
-                    ),
-                    Obx(() => RoundButton(
-                          gradient: true,
-                          margin: 0,
-                          backgroundColor: themecontroller.colorPrimary,
-                          height: 60.sp,
-                          loading: apihitting.value,
-                          disabled: apihitting.value,
-                          title: 'Add',
-                          iconColor: themecontroller.colorwhite,
-                          textColor: themecontroller.colorwhite,
-                          onTap: () async {
-                            await internetController.internetCheckerFun();
-
-                            if (_formkey.currentState!.validate()) {
-                              // if (internetController
-                              //         .isInternetConnected.value ==
-                              //     true) {
-                              apihitting.value = true;
-                              var kidData = KidsModel(
-                                  id: 1,
-                                  name: NameController.text,
-                                  parentId: 1,
-                                  schoolId: 1,
-                                  schoolName: 'schoolName',
-                                  createDate: DateTime.now(),
-                                  updateDate: DateTime.now());
-                              kidsController.AddKids(kidData);
-                              Navigator.pop(context);
-                              // controller.loginWithEmail(
-                              //     context,
-                              //     controller.emailController.value.text,
-                              //     controller.passwordController.value.text);
-                              // } else {
-                              //   FlutterToastDisplay.getInstance
-                              //       .showToast("Please check your internet");
-                              // }
-                            }
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomTextFieldWidget(
+                          enabled: true,
+                          label: '',
+                          controller: NameController,
+                          fieldColor: themecontroller.colorwhite,
+                          hintText: "Enter Name",
+                          inputType: TextInputType.name,
+                          focusNode: _NameFocusNode,
+                          onsubmit: () {},
+                          onchange: (value) {
+                            apihitting.value = false;
                           },
-                        )),
-                  ],
-                ))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter an Name';
+                            }
+
+                            return null;
+                          },
+                        ),
+                        Obx(() => RoundButton(
+                              gradient: true,
+                              margin: 0,
+                              backgroundColor: themecontroller.colorPrimary,
+                              height: 60.sp,
+                              loading: apihitting.value,
+                              disabled: apihitting.value,
+                              title: 'Add',
+                              iconColor: themecontroller.colorwhite,
+                              textColor: themecontroller.colorwhite,
+                              onTap: () async {
+                                await internetController.internetCheckerFun();
+
+                                if (_formkey.currentState!.validate()) {
+                                  // if (internetController
+                                  //         .isInternetConnected.value ==
+                                  //     true) {
+                                  apihitting.value = true;
+                                  if (kidsController.KidsList.isEmpty) {
+                                    var kidData = KidsModel(
+                                        id: 1,
+                                        name: NameController.text,
+                                        parentId: 1,
+                                        schoolId: 1,
+                                        schoolName: 'schoolName',
+                                        createDate: DateTime.now(),
+                                        updateDate: DateTime.now());
+                                    kidsController.AddKids(kidData);
+                                    Navigator.pop(context);
+                                  } else {
+                                    var kidData = KidsModel(
+                                        id: kidsController.KidsList.length,
+                                        name: NameController.text,
+                                        parentId: 1,
+                                        schoolId: 1,
+                                        schoolName: 'schoolName',
+                                        createDate: DateTime.now(),
+                                        updateDate: DateTime.now());
+                                    kidsController.AddKids(kidData);
+                                    Navigator.pop(context);
+                                  }
+                                  // controller.loginWithEmail(
+                                  //     context,
+                                  //     controller.emailController.value.text,
+                                  //     controller.passwordController.value.text);
+                                  // } else {
+                                  //   FlutterToastDisplay.getInstance
+                                  //       .showToast("Please check your internet");
+                                  // }
+                                }
+                              },
+                            )),
+                      ],
+                    ))),
           ),
         ),
       );

@@ -22,9 +22,9 @@ class KidsController extends GetxController {
       Isloading.value = true;
       // final PopularData = await ExploreAPI.getPopulerProductData();
 
-      KidsList.value = MockData.dummyKidsData;
+      // KidsList.value = MockData.dummyKidsData;
 
-      print('KidsList: ${KidsList.length}');
+      // print('KidsList: ${KidsList.length}');
       Isloading.value = false;
     } catch (e) {
       Isloading.value = false;

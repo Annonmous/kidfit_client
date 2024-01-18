@@ -37,7 +37,7 @@ class MockData {
       updateDate: DateTime.now(),
     ),
     ProductModel(
-      id: 3,
+      id: 4,
       name: 'Product 4',
       description: 'Description for Product 3',
       image:
@@ -48,7 +48,7 @@ class MockData {
       updateDate: DateTime.now(),
     ),
     ProductModel(
-      id: 3,
+      id: 5,
       name: 'Product 3',
       description: 'Description for Product 3',
       image:

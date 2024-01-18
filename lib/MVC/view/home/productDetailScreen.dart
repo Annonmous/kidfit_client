@@ -10,6 +10,7 @@ import 'package:foodeoapp/components/image_widget.dart';
 import 'package:foodeoapp/components/round_button.dart';
 import 'package:foodeoapp/components/spring_widget.dart';
 import 'package:foodeoapp/constant/constants.dart';
+import 'package:foodeoapp/constant/flutter_toast.dart';
 import 'package:foodeoapp/constant/theme.dart';
 import 'package:foodeoapp/helper/data_storage.dart';
 import 'package:get/get.dart';
@@ -112,18 +113,39 @@ class ProductDetailsScreen extends StatelessWidget {
                                     iconColor: themeController.colorwhite,
                                     textColor: themeController.colorwhite,
                                     onTap: () async {
-                                      var cartData = CartModel(
-                                          kid_Id: homeController
-                                              .SelectedKidId.value,
-                                          parentId: 1,
-                                          product_id: ProductData.id,
-                                          product_name: ProductData.name,
-                                          product_image: ProductData.image,
-                                          Kid_name: homeController
-                                              .SelectedKidName.value);
+                                      if (homeController.SelectedKidId.value !=
+                                          0) {
+                                        var cartData = CartModel(
+                                            kid_Id: homeController
+                                                .SelectedKidId.value,
+                                            parentId: 1,
+                                            product_id: ProductData.id,
+                                            product_name: ProductData.name,
+                                            product_image: ProductData.image,
+                                            Kid_name: homeController
+                                                .SelectedKidName.value);
 
-                                      homeController.addAndRemoveCart(
-                                          cartData, 1);
+                                        var exists =
+                                            homeController.CartList.where((e) =>
+                                                e.Kid_name ==
+                                                    cartData.Kid_name &&
+                                                e.kid_Id == cartData.kid_Id &&
+                                                e.parentId ==
+                                                    cartData.parentId &&
+                                                e.product_id ==
+                                                    cartData.product_id);
+
+                                        if (exists.isEmpty) {
+                                          homeController.addAndRemoveCart(
+                                              cartData, 1);
+                                        } else {
+                                          FlutterToastDisplay.getInstance.showToast(
+                                              "This Product is already exist");
+                                        }
+                                      } else {
+                                        FlutterToastDisplay.getInstance.showToast(
+                                            "Please select kid first from home screen");
+                                      }
                                     },
                                   ),
                                 ),

@@ -11,6 +11,7 @@ import 'package:foodeoapp/components/custom_appbar.dart';
 import 'package:foodeoapp/components/custom_textfiled.dart';
 import 'package:foodeoapp/components/drawer.dart';
 import 'package:foodeoapp/components/image_widget.dart';
+import 'package:foodeoapp/components/round_button.dart';
 import 'package:foodeoapp/components/spring_widget.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/navigation.dart';
@@ -23,6 +24,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   final homeController = Get.put(HomeController());
+  final kidController = Get.put(KidsController());
 
   Widget build(BuildContext context) {
     return GetBuilder<ThemeHelper>(
@@ -37,52 +39,89 @@ class CartScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Obx(
                   () => Column(children: [
-                    ...homeController.CartList.map((e) => Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.sp),
-                      child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 20.sp),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20.sp)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20.sp, vertical: 10.sp),
-                                    child: Text(
-                                      e.Kid_name,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 18.sp),
+                    ...kidController.KidsList.map((e) => homeController.CartList
+                            .where((element) => element.kid_Id == e.id).isEmpty
+                        ? SizedBox()
+                        : Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.sp),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 20.sp),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color.fromARGB(179, 0, 0, 0)
+                                          .withOpacity(0.1),
+                                      blurRadius: 20.0,
+                                      spreadRadius: 1,
+                                      offset: Offset(2, 8),
                                     ),
-                                  ),
-                                  ListTile(
-                                    leading: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.sp),
-                                      child: ImageWidget(
-                                        imageUrl: e.product_image,
-                                        height: 60.sp,
-                                        width: 60.sp,
+                                  ],
+                                  borderRadius: BorderRadius.circular(20.sp)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 20.sp, vertical: 10.sp),
+                                      child: Text(
+                                        e.name,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18.sp),
                                       ),
                                     ),
-                                    title: Text(
-                                      e.product_name,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 12.sp),
-                                    ),
-                                    trailing: SpringWidget(
-                                      onTap: () {
-                                        homeController.addAndRemoveCart(e, 0);
-                                      },
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: themeController.colorPrimary,
+                                    ...homeController.CartList.where(
+                                            (element) => element.kid_Id == e.id)
+                                        .map((e) => Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10.sp),
+                                              child: ListTile(
+                                                leading: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.sp),
+                                                  child: ImageWidget(
+                                                    imageUrl: e.product_image,
+                                                    height: 60.sp,
+                                                    width: 60.sp,
+                                                  ),
+                                                ),
+                                                title: Text(
+                                                  e.product_name,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 12.sp),
+                                                ),
+                                                trailing: SpringWidget(
+                                                  onTap: () {
+                                                    homeController
+                                                        .addAndRemoveCart(e, 0);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.delete,
+                                                    color: themeController
+                                                        .colorPrimary,
+                                                  ),
+                                                ),
+                                              ),
+                                            ))
+                                        .toList(),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10.sp),
+                                      child: RoundButton(
+                                        backgroundColor:
+                                            themeController.colorPrimary,
+                                        textColor: Colors.white,
+                                        height: 30.sp,
+                                        title: 'Checkout',
+                                        onTap: () {},
                                       ),
-                                    ),
-                                  )
-                                ]),
-                          ),
-                    )).toList()
+                                    )
+                                  ]),
+                            ),
+                          )).toList()
                   ]),
                 ),
               ),

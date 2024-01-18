@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foodeoapp/MVC/view/home/BottomNav.dart';
+import 'package:foodeoapp/MVC/view/school%20Screen/schoolBottomNav.dart';
+import 'package:foodeoapp/MVC/view/school%20Screen/schoolHomeScreen.dart';
 import 'package:foodeoapp/MVC/view/loginScreen/registerationScreen.dart';
 import 'package:foodeoapp/components/custom_textfiled.dart';
 import 'package:foodeoapp/constant/constants.dart';
@@ -145,7 +147,7 @@ class LoginWithEmail extends StatelessWidget {
                                 //     true) {
                                 apihitting.value = true;
                                 Navigation.getInstance
-                                    .screenNavigation(context, BottomNavBar());
+                                    .screenNavigation(context, SchoolBottomNavBar());
                                 // AppService.getInstance.login(
                                 //     context,
                                 //     emailController.text,

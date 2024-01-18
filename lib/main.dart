@@ -11,7 +11,8 @@ import 'helper/data_storage.dart';
 import 'services/fcm_token.dart';
 
 void main() async {
-  await FirebaseDB.init();
+  // await FirebaseDB.init();
+  WidgetsFlutterBinding.ensureInitialized();
   DataStroge.getInstance.initiateSession();
   loadConfig();
   runApp(const MyApp());

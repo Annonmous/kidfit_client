@@ -89,6 +89,7 @@ class HomeScreen extends StatelessWidget {
                                                             kidController
                                                                 .KidsList[index]
                                                                 .name;
+                                                        Navigator.pop(context);
                                                       },
                                                       child: ListTile(
                                                         title: Text(
