@@ -6,6 +6,7 @@ import 'package:foodeoapp/MVC/view/home/MainhomeScreen.dart';
 import 'package:foodeoapp/MVC/view/home/ProfileScreen.dart';
 import 'package:foodeoapp/MVC/view/home/cartScreen.dart';
 import 'package:foodeoapp/MVC/view/home/SearchScreen.dart';
+import 'package:foodeoapp/MVC/view/school%20Screen/QRScanScreen.dart';
 import 'package:foodeoapp/MVC/view/school%20Screen/schoolHomeScreen.dart';
 import 'package:foodeoapp/components/custom_appbar.dart';
 import 'package:foodeoapp/components/drawer.dart';
@@ -40,13 +41,13 @@ class _SchoolBottomNavBarState extends State<SchoolBottomNavBar> {
               child: Scaffold(
                 extendBody: true,
                 appBar: CustomAppBar(
-                    backgroundColor: _currentIndex == 3
+                    backgroundColor: _currentIndex == 2
                         ? themeController.colorPrimary
                         : themeController.bgcolor,
-                    leadingColor: _currentIndex == 3
+                    leadingColor: _currentIndex == 2
                         ? Colors.white
                         : themeController.colorPrimary,
-                    titleColor: _currentIndex == 3
+                    titleColor: _currentIndex == 2
                         ? Colors.white
                         : themeController.textcolor,
                     Title: _PageTitle(_currentIndex),
@@ -106,7 +107,7 @@ class _SchoolBottomNavBarState extends State<SchoolBottomNavBar> {
                                       color: themeController.bottomiconcolor,
                                     ),
                             ),
-                            label: 'Home'.tr,
+                            label: 'Shop'.tr,
                           ),
                           BottomNavigationBarItem(
                             icon: Padding(
@@ -115,6 +116,7 @@ class _SchoolBottomNavBarState extends State<SchoolBottomNavBar> {
                                     ? Icon(
                                         Icons.qr_code_rounded,
                                         size: 20,
+                                          color: themeController.colorPrimary,
                                       )
 
                                     // SvgPicture.asset(
@@ -134,9 +136,9 @@ class _SchoolBottomNavBarState extends State<SchoolBottomNavBar> {
                                     Icon(
                                         Icons.qr_code_rounded,
                                         size: 17,
-                                        color: themeController.colorPrimary,
+                                        color: themeController.bottomiconcolor,
                                       )),
-                            label: 'Explore'.tr,
+                            label: 'QR Scanner'.tr,
                           ),
                           BottomNavigationBarItem(
                             icon: Padding(
@@ -169,7 +171,7 @@ class _SchoolBottomNavBarState extends State<SchoolBottomNavBar> {
       case 0:
         return SchoolHomeScreen();
       case 1:
-        return SearchScreen();
+        return QRCodeScannerScreen();
 
       case 2:
         return ProfileScreen();
@@ -181,14 +183,14 @@ class _SchoolBottomNavBarState extends State<SchoolBottomNavBar> {
   String _PageTitle(int index) {
     switch (index) {
       case 0:
-        return 'Explore';
+        return 'My Shop';
       case 1:
-        return 'Saerch';
+        return 'Scan QR';
 
       case 2:
         return 'Profile';
       default:
-        return 'Explore';
+        return 'My Shop';
     }
   }
 }

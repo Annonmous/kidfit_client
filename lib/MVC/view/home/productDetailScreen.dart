@@ -99,6 +99,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                                
                                 Padding(
                                   padding:
                                       EdgeInsets.symmetric(vertical: 20.sp),

@@ -8,10 +8,9 @@ import 'package:foodeoapp/constant/theme.dart';
 import 'package:get/get.dart';
 import 'constant/constants.dart';
 import 'helper/data_storage.dart';
-import 'services/fcm_token.dart';
+
 
 void main() async {
-  // await FirebaseDB.init();
   WidgetsFlutterBinding.ensureInitialized();
   DataStroge.getInstance.initiateSession();
   loadConfig();
