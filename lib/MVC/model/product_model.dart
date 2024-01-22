@@ -7,7 +7,7 @@ class ProductModel {
   int Price;
   DateTime createDate;
   DateTime updateDate;
-final SchoolModel school;
+  final SchoolModel school;
   ProductModel({
     required this.id,
     required this.name,
@@ -17,20 +17,20 @@ final SchoolModel school;
     required this.Price,
     required this.createDate,
     required this.updateDate,
-    required this.school, 
+    required this.school,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      image: json['image'],
-      Price: json['Price'],
-      schoolId: json['school_id'],
-      createDate: DateTime.parse(json['createDate']),
-      updateDate: DateTime.parse(json['updateDate']),
-            school: SchoolModel.fromJson(json['school']),
+      name: json['productsName'],
+      description: json['productsName'],
+      image: json['image'] == null ? '' : json['image'],
+      Price: int.parse(json['productsPrice']),
+      schoolId: json['schoolId'],
+      createDate: DateTime.parse(json['createdAt']),
+      updateDate: DateTime.parse(json['updatedAt']),
+      school: SchoolModel.fromJson(json['school']),
     );
   }
 

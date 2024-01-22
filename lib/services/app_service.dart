@@ -129,17 +129,15 @@ class AppService {
 
   Future<void> addKid(BuildContext context, KidsModel kidData) async {
     try {
-      var response = await dio.post(Constants.PostRegister, data: {
+      var response = await dio.post(Constants.addChild, data: {
         "name": kidData.name,
         "parentId": kidData.parentId,
         "schoolId": kidData.schoolId,
         "classNo": kidData.classNo
       });
 
-      if (response.data['status']) {
-        log("addKid API =>${response.data['status']}👌✅");
-        final json = response.data;
-        Navigator.pop(context);
+      if (response.statusCode == 200) {
+        log("addKid API =>👌✅ ${response.data['message']}");
       } else {
         print('Unknown Error Occurred ${(response.data['message'])} ');
         FlutterToastDisplay.getInstance
@@ -273,11 +271,11 @@ class AppService {
       var response;
       response = await dio.get(
         Constants.GetAllSchool,
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${DataStroge.userToken}',
-          },
-        ),
+        // options: Options(
+        //   headers: {
+        //     'Authorization': 'Bearer ${DataStroge.userToken}',
+        //   },
+        // ),
       );
 
       print("statusCode => " + response.statusCode.toString());

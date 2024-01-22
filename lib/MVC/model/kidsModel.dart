@@ -24,7 +24,7 @@ class KidsModel {
       id: json['id'],
       name: json['name'],
       classNo: json['classNo'],
-      image: json['image'],
+      image: json['image'] == null ? '' : json['image'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       parentId: json['parentId'],

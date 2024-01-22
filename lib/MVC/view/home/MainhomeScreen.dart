@@ -109,6 +109,12 @@ class HomeScreen extends StatelessWidget {
                                                                         kidController
                                                                             .KidsList[index]
                                                                             .name;
+
+                                                                    homeController.getAllProductData(kidController
+                                                                        .KidsList[
+                                                                            index]
+                                                                        .schoolId);
+
                                                                     Navigator.pop(
                                                                         context);
                                                                   },
@@ -154,58 +160,67 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            ListTile(
-                              leading: Text(
-                                'recommended For You 🔥',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              trailing: SpringWidget(
-                                onTap: () {
-                                  // Navigation.getInstance
-                                  //     .screenNavigation(context, RecommendedScreen());
-                                },
-                                child: Text(
-                                  'See All',
-                                  style: TextStyle(
-                                      color: Colors.red, fontSize: 13.sp),
-                                ),
-                              ),
+                            SizedBox(
+                              height: 10,
                             ),
+                            Row(
+                              children: [
+                                Text(
+                                  'recommended For You 🔥',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),
                       Expanded(
                         flex: 9,
                         child: Obx(
-                          () => Container(
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10),
-                              itemCount: homeController.ProductList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                var list = homeController.ProductList;
-                                return SpringWidget(
-                                  onTap: () {
-                                    Navigation.getInstance.screenNavigation(
-                                        context,
-                                        ProductDetailsScreen(
-                                            ProductData: list[index]));
-                                  },
-                                  child: productcard(
-                                      image: list[index].image,
-                                      name: list[index].name,
-                                      price: list[index].Price.toString(),
-                                      SchoolImage: list[index].image),
-                                );
-                              },
-                            ),
-                          ),
+                          () => homeController.ProductList.isEmpty
+                              ? Center(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/No-product.png'),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  child: GridView.builder(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            crossAxisSpacing: 10,
+                                            mainAxisSpacing: 10),
+                                    itemCount:
+                                        homeController.ProductList.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      var list = homeController.ProductList;
+                                      return SpringWidget(
+                                        onTap: () {
+                                          Navigation.getInstance
+                                              .screenNavigation(
+                                                  context,
+                                                  ProductDetailsScreen(
+                                                      ProductData:
+                                                          list[index]));
+                                        },
+                                        child: productcard(
+                                            image: list[index].image,
+                                            name: list[index].name,
+                                            price: list[index].Price.toString(),
+                                            SchoolImage: list[index].image),
+                                      );
+                                    },
+                                  ),
+                                ),
                         ),
                       ),
                     ]),

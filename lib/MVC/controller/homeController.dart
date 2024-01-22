@@ -23,7 +23,7 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  getPopulerProductData(int school_id) async {
+  getAllProductData(int school_id) async {
     try {
       Isloading.value = true;
       final DataList = await AppService.getInstance.getAllProduct(school_id);
@@ -43,7 +43,7 @@ class HomeController extends GetxController {
       final DataList = await AppService.getInstance.getAllSchools();
       // ProductList.value = MockData.dummyProducts;
       schoolList.value = DataList;
-      print('ProductList: ${ProductList.length}');
+      print('getAllSchools: ${schoolList.length}');
       Isloading.value = false;
     } catch (e) {
       Isloading.value = false;

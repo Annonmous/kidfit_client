@@ -38,9 +38,9 @@ class KidsController extends GetxController {
   AddKids(BuildContext context, KidsModel kidData) async {
     try {
       final PopularData = await AppService.getInstance.addKid(context, kidData);
-
-      KidsList.add(kidData);
+      getAllKids();
       print('KidsList: ${KidsList.length}');
+      Navigator.pop(context);
     } catch (e) {
       Isloading.value = false;
       print('error getPopulerProductData view model:$e');
