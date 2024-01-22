@@ -1,13 +1,17 @@
 import 'package:foodeoapp/MVC/model/CartModel.dart';
 import 'package:foodeoapp/MVC/model/ExploreModel.dart';
+import 'package:foodeoapp/MVC/model/kidsModel.dart';
 import 'package:foodeoapp/MVC/model/product_model.dart';
 import 'package:foodeoapp/data/mockData.dart';
+import 'package:foodeoapp/services/app_service.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   final selectedIndex = 0.obs;
 
   RxList<ProductModel> ProductList = <ProductModel>[].obs;
+  RxList<SchoolModel> schoolList = <SchoolModel>[].obs;
+  RxList<KidsModel> ChildList = <KidsModel>[].obs;
   RxList<CartModel> CartList = <CartModel>[].obs;
   final SelectedKidId = 0.obs;
   final SelectedKidName = ''.obs;
@@ -17,16 +21,14 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getPopulerProductData();
   }
 
-  getPopulerProductData() async {
+  getPopulerProductData(int school_id) async {
     try {
       Isloading.value = true;
-      // final PopularData = await ExploreAPI.getPopulerProductData();
-
-      ProductList.value = MockData.dummyProducts;
-
+      final DataList = await AppService.getInstance.getAllProduct(school_id);
+      // ProductList.value = MockData.dummyProducts;
+      ProductList.value = DataList;
       print('ProductList: ${ProductList.length}');
       Isloading.value = false;
     } catch (e) {
@@ -34,6 +36,38 @@ class HomeController extends GetxController {
       print('error getPopulerProductData view model:$e');
     }
   }
+
+  getAllSchools() async {
+    try {
+      Isloading.value = true;
+      final DataList = await AppService.getInstance.getAllSchools();
+      // ProductList.value = MockData.dummyProducts;
+      schoolList.value = DataList;
+      print('ProductList: ${ProductList.length}');
+      Isloading.value = false;
+    } catch (e) {
+      Isloading.value = false;
+      print('error getPopulerProductData view model:$e');
+    }
+  }
+
+  getAllChildrenByParentId() async {
+    try {
+      Isloading.value = true;
+      final DataList = await AppService.getInstance.getAllChildrenByParentId();
+      // ProductList.value = MockData.dummyProducts;
+      ChildList.value = DataList;
+      print('ProductList: ${ProductList.length}');
+      Isloading.value = false;
+    } catch (e) {
+      Isloading.value = false;
+      print('error getPopulerProductData view model:$e');
+    }
+  }
+
+
+
+
 
   // getSearchProduct(String search) async {
   //   try {

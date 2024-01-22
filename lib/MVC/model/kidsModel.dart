@@ -1,44 +1,34 @@
 class KidsModel {
-  int id;
-  String name;
-
-  int parentId;
-  int schoolId;
-  String schoolName;
-  DateTime createDate;
-  DateTime updateDate;
+  final int id;
+  final String name;
+  final String classNo;
+  final String image;
+  final String createdAt;
+  final String updatedAt;
+  final int parentId;
+  final int schoolId;
 
   KidsModel({
     required this.id,
     required this.name,
+    required this.classNo,
+    required this.image,
+    required this.createdAt,
+    required this.updatedAt,
     required this.parentId,
     required this.schoolId,
-    required this.schoolName,
-    required this.createDate,
-    required this.updateDate,
   });
 
   factory KidsModel.fromJson(Map<String, dynamic> json) {
     return KidsModel(
       id: json['id'],
       name: json['name'],
-      parentId: json['parent_id'],
-      schoolId: json['school_id'],
-      schoolName: json['schoolName'],
-      createDate: DateTime.parse(json['createDate']),
-      updateDate: DateTime.parse(json['updateDate']),
+      classNo: json['classNo'],
+      image: json['image'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+      parentId: json['parentId'],
+      schoolId: json['schoolId'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'parent_id': parentId,
-      'school_id': schoolId,
-      'schoolName': schoolName,
-      'createDate': createDate.toIso8601String(),
-      'updateDate': updateDate.toIso8601String(),
-    };
   }
 }

@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:foodeoapp/MVC/model/ExploreModel.dart';
 import 'package:foodeoapp/MVC/model/kidsModel.dart';
 import 'package:foodeoapp/MVC/model/product_model.dart';
 import 'package:foodeoapp/data/mockData.dart';
+import 'package:foodeoapp/services/app_service.dart';
 import 'package:get/get.dart';
 
 class KidsController extends GetxController {
@@ -32,9 +34,9 @@ class KidsController extends GetxController {
     }
   }
 
-  AddKids(KidsModel kidData) async {
+  AddKids(BuildContext context ,KidsModel kidData) async {
     try {
-      // final PopularData = await ExploreAPI.getPopulerProductData();
+      final PopularData = await AppService.getInstance.addKid(context, kidData);
 
       KidsList.add(kidData);
       print('KidsList: ${KidsList.length}');

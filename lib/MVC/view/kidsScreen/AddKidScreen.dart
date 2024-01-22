@@ -86,33 +86,18 @@ class AddKidScreen extends StatelessWidget {
                                   //         .isInternetConnected.value ==
                                   //     true) {
                                   apihitting.value = true;
-                                  if (kidsController.KidsList.isEmpty) {
-                                    var kidData = KidsModel(
-                                        id: 1,
-                                        name: NameController.text,
-                                        parentId: 1,
-                                        schoolId: 1,
-                                        schoolName: 'schoolName',
-                                        createDate: DateTime.now(),
-                                        updateDate: DateTime.now());
-                                    kidsController.AddKids(kidData);
-                                    Navigator.pop(context);
-                                  } else {
-                                    var kidData = KidsModel(
-                                        id: kidsController.KidsList.length,
-                                        name: NameController.text,
-                                        parentId: 1,
-                                        schoolId: 1,
-                                        schoolName: 'schoolName',
-                                        createDate: DateTime.now(),
-                                        updateDate: DateTime.now());
-                                    kidsController.AddKids(kidData);
-                                    Navigator.pop(context);
-                                  }
-                                  // controller.loginWithEmail(
-                                  //     context,
-                                  //     controller.emailController.value.text,
-                                  //     controller.passwordController.value.text);
+                                  var kidData = KidsModel(
+                                      id: 1,
+                                      name: NameController.text,
+                                      parentId: 1,
+                                      schoolId: 1,
+                                      classNo: '2',
+                                      image: '',
+                                      createdAt: DateTime.now().toString(),
+                                      updatedAt: DateTime.now().toString());
+                                  kidsController.AddKids(context, kidData);
+                                  Navigator.pop(context);
+
                                   // } else {
                                   //   FlutterToastDisplay.getInstance
                                   //       .showToast("Please check your internet");
