@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:foodeoapp/components/image_widget.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/theme.dart';
+import 'package:foodeoapp/helper/data_storage.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -65,8 +66,8 @@ class ProfileScreen extends StatelessWidget {
                               width: 150.sp,
                               child: Text(
                                 textAlign: TextAlign.center,
-                                'Test Users',
-                                // DataStroge.userName.string,
+                                // 'Test Users',
+                                DataStroge.userName.string,
                                 softWrap: true,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -78,7 +79,20 @@ class ProfileScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: 10.sp,
+                              width: 150.sp,
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                // 'Test Users',
+                                DataStroge.userEmail.string,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w300,
+                                    letterSpacing: 1.sp),
+                              ),
                             ),
                           ]),
                     ),
@@ -143,7 +157,7 @@ class ProfileScreen extends StatelessWidget {
                                   letterSpacing: 1.sp),
                             ),
                           ),
-                           ListTile(
+                          ListTile(
                             leading: Text(
                               'Logout',
                               style: TextStyle(

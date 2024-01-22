@@ -23,7 +23,7 @@ class KidListTile extends StatelessWidget {
       'name': KidsData.name,
       'parentId': KidsData.parentId,
       'schoolId': KidsData.schoolId,
-      'schoolName': KidsData.schoolName,
+
       'createDate': DateTime.now().toString(),
       'updateDate': DateTime.now().toString(),
     };
@@ -68,13 +68,13 @@ class KidListTile extends StatelessWidget {
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w600),
             ),
-            subtitle: Text(
-              'Student of ${KidsData.schoolName}',
-              style: TextStyle(
-                color: themecontroller.textcolor.withOpacity(0.7),
-                fontSize: 10.sp,
-              ),
-            ),
+            // subtitle: Text(
+            //   'Student of ${KidsData.}',
+            //   style: TextStyle(
+            //     color: themecontroller.textcolor.withOpacity(0.7),
+            //     fontSize: 10.sp,
+            //   ),
+            // ),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(Icons.edit, size: 20.sp),
               SizedBox(
@@ -109,14 +109,14 @@ class KidListTile extends StatelessWidget {
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w600),
                             ),
-                            Text(
-                              'Student of ${KidsData.schoolName}',
-                              style: TextStyle(
-                                color:
-                                    themecontroller.textcolor.withOpacity(0.7),
-                                fontSize: 10.sp,
-                              ),
-                            ),
+                            // Text(
+                            //   'Student of ${KidsData.schoolName}',
+                            //   style: TextStyle(
+                            //     color:
+                            //         themecontroller.textcolor.withOpacity(0.7),
+                            //     fontSize: 10.sp,
+                            //   ),
+                            // ),
                           ]),
                         );
                       }));

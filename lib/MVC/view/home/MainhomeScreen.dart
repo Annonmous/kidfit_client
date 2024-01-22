@@ -52,54 +52,77 @@ class HomeScreen extends StatelessWidget {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              SizedBox(
-                                                height: 30.sp,
-                                              ),
-                                              Text(
-                                                'Select Child',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16.sp,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                              SizedBox(
-                                                height: 30.sp,
-                                              ),
-                                              Container(
-                                                height: 200.sp,
-                                                child: ListView.builder(
-                                                  itemCount: kidController
-                                                      .KidsList.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    return SpringWidget(
-                                                      onTap: () {
-                                                        homeController
-                                                                .SelectedKidId
-                                                                .value =
-                                                            kidController
-                                                                .KidsList[index]
-                                                                .id;
-
-                                                        homeController
-                                                                .SelectedKidName
-                                                                .value =
-                                                            kidController
-                                                                .KidsList[index]
-                                                                .name;
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: ListTile(
-                                                        title: Text(
-                                                            kidController
-                                                                .KidsList[index]
-                                                                .name),
-                                                      ),
-                                                    );
-                                                  },
+                                              if (kidController
+                                                  .KidsList.isNotEmpty)
+                                                SizedBox(
+                                                  height: 30.sp,
                                                 ),
+                                              if (kidController
+                                                  .KidsList.isNotEmpty)
+                                                Text(
+                                                  'Select Child',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 16.sp,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              if (kidController
+                                                  .KidsList.isNotEmpty)
+                                                SizedBox(
+                                                  height: 30.sp,
+                                                ),
+                                              Obx(
+                                                () =>
+                                                    kidController
+                                                            .KidsList.isEmpty
+                                                        ? Text(
+                                                            'No children added yet',
+                                                            style: TextStyle(
+                                                                color: themeController
+                                                                    .colorPrimary),
+                                                          )
+                                                        : Container(
+                                                            height: 200.sp,
+                                                            child: ListView
+                                                                .builder(
+                                                              itemCount:
+                                                                  kidController
+                                                                      .KidsList
+                                                                      .length,
+                                                              itemBuilder:
+                                                                  (BuildContext
+                                                                          context,
+                                                                      int index) {
+                                                                return SpringWidget(
+                                                                  onTap: () {
+                                                                    homeController
+                                                                            .SelectedKidId
+                                                                            .value =
+                                                                        kidController
+                                                                            .KidsList[index]
+                                                                            .id;
+
+                                                                    homeController
+                                                                            .SelectedKidName
+                                                                            .value =
+                                                                        kidController
+                                                                            .KidsList[index]
+                                                                            .name;
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child:
+                                                                      ListTile(
+                                                                    title: Text(kidController
+                                                                        .KidsList[
+                                                                            index]
+                                                                        .name),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                          ),
                                               )
                                             ]),
                                       );

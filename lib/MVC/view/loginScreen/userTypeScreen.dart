@@ -72,6 +72,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Expanded(flex: 2, child: SizedBox(height: 40.sp)),
                 Container(
                   height: 100.sp,
                   width: 100.sp,
@@ -84,7 +85,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                     color: themecontroller.colorPrimary,
                   ),
                 ),
-                SizedBox(height: 30.sp),
+                Expanded(flex: 2, child: SizedBox(height: 30.sp)),
                 SpringWidget(
                   onTap: () {
                     Navigation.getInstance
@@ -99,27 +100,14 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                       // controller.selectedUserType.value = 'user';
                       // log('object  ${controller.selectedUserType.value}');
                     },
-                    title: 'Login as a User',
+                    title: 'Get Started',
                     gradient: true,
                     textColor: themecontroller.colorwhite,
                   ),
                 ),
-                SizedBox(height: 12.sp),
-                RoundButton(
-                  margin: 0,
-                  backgroundColor: themecontroller.colorPrimary,
-                  borderColor: themecontroller.colorwhite,
-                  height: 58.sp,
-                  gradient: true,
-                  onTap: () {
-                    // controller.selectedUserType.value = 'owner';
-                    // log('object  ${controller.selectedUserType.value}');
-                    // Navigation.getInstance
-                    //     .screenNavigation(context, LoginScreen());
-                  },
-                  title: 'Login as a school',
-                  textColor: themecontroller.colorwhite,
-                ),
+                SizedBox(
+                  height: 20.sp,
+                )
               ],
             ),
           ),

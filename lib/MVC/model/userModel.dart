@@ -26,7 +26,7 @@ class UserModel {
       email: json['email'] ?? '',
       image: json['image'] ?? '',
       password: json['password'] ?? '',
-      userRole: json['userRole'] ?? '',
+      userRole: json['role'] ?? '',
       createDate: json['createDate'] ?? '',
       updateDate: json['updateDate'] ?? '',
     );

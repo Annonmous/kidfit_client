@@ -6,6 +6,7 @@ import 'package:foodeoapp/MVC/model/kidsModel.dart';
 import 'package:foodeoapp/MVC/model/product_model.dart';
 import 'package:foodeoapp/MVC/model/userModel.dart';
 import 'package:foodeoapp/MVC/view/home/BottomNav.dart';
+import 'package:foodeoapp/MVC/view/school%20Screen/schoolBottomNav.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/flutter_toast.dart';
 import 'package:foodeoapp/constant/navigation.dart';
@@ -48,18 +49,19 @@ class AppService {
         'password': password,
       });
 
-      if (response.data['status']) {
-        log("login API =>${response.data['status']}👌✅");
+      if (response.statusCode == 200) {
+        log("Registeration API =>${response.data['message']}👌✅");
         final json = response.data;
 
         AuthResponse UserData = AuthResponse.fromJson(json);
 
-        log("userEmail ${UserData.data.email}");
-        log("username ${UserData.data.email}");
-        await _pref.insertUserData(UserData.data, UserData.accessToken);
-        FlutterToastDisplay.getInstance.showToast("Welcome To Kidfit");
-        Navigation.getInstance
-            .pagePushAndReplaceNavigation(context, BottomNavBar());
+        log("userEmail: ${UserData.data.email}");
+        _pref.insertUserData(UserData.data, UserData.accessToken);
+        Navigation.getInstance.pagePushAndReplaceNavigation(
+            context,
+            UserData.data.userRole == 'USER'
+                ? BottomNavBar()
+                : SchoolBottomNavBar());
       } else {
         print('Unknown Error Occurred ${(response.data['message'])} ');
         FlutterToastDisplay.getInstance
@@ -90,20 +92,22 @@ class AppService {
         'name': UserData.name,
         'email': UserData.email,
         'password': UserData.password,
-        'confirm_password': UserData.password,
-        'userRole': UserData.userRole,
+        'role': UserData.userRole,
       });
 
-      if (response.data['status']) {
-        log("Registeration API =>${response.data['status']}👌✅");
+      if (response.statusCode == 200) {
+        log("Registeration API =>${response.data['message']}👌✅");
         final json = response.data;
 
         AuthResponse UserData = AuthResponse.fromJson(json);
 
         log("userEmail: ${UserData.data.email}");
-
-        Navigation.getInstance
-            .pagePushAndReplaceNavigation(context, BottomNavBar());
+        _pref.insertUserData(UserData.data, UserData.accessToken);
+        Navigation.getInstance.pagePushAndReplaceNavigation(
+            context,
+            UserData.data.userRole == 'USER'
+                ? BottomNavBar()
+                : SchoolBottomNavBar());
         // FlutterToastDisplay.getInstance
         // .showToast("Your OTP is ${UserData.verificationcode}");
       } else {
@@ -183,9 +187,6 @@ class AppService {
     }
   }
 
-
-
-
   getAllProduct(int school_id) async {
     try {
       var response;
@@ -231,17 +232,17 @@ class AppService {
       var response;
       response = await dio.get(Constants.getAllChild,
           options: Options(
-            headers: {
-              'Authorization': 'Bearer ${DataStroge.userToken}',
-            },
-          ),
+              // headers: {
+              //   'Authorization': 'Bearer ${DataStroge.userToken}',
+              // },
+              ),
           data: {
             'schoolId': '',
-            'parentId': DataStroge.currentUserId,
+            'parentId': DataStroge.currentUserId.value,
           });
 
       print("statusCode => " + response.statusCode.toString());
-      print('getAllProduct API done 👌✅');
+      print('getAllChildrenByParentId API done 👌✅');
       print(response.data['message']);
       if (response.statusCode == 200) {
         final responseData = response.data;

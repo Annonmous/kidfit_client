@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foodeoapp/MVC/view/home/BottomNav.dart';
 import 'package:foodeoapp/MVC/view/loginScreen/userTypeScreen.dart';
+import 'package:foodeoapp/MVC/view/school%20Screen/schoolBottomNav.dart';
 import 'package:foodeoapp/constant/theme.dart';
 import 'package:get/get.dart';
 import 'constant/constants.dart';
 import 'helper/data_storage.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,13 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: UserTypeScreen(),
+      child: Obx(
+        () => DataStroge.userToken.value == ''
+            ? UserTypeScreen()
+            : DataStroge.userRole.value == 'USER'
+                ? BottomNavBar()
+                : SchoolBottomNavBar(),
+      ),
     );
   }
 }

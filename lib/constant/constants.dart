@@ -1,5 +1,5 @@
 class Constants {
-  static const double screenPadding = 10;
+  static const double screenPadding = 20;
   static const String currency = '€';
   static var API_HOST = "";
 

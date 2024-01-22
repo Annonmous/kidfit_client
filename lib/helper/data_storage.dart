@@ -41,14 +41,14 @@ class DataStroge extends GetxController {
     AppService.getInstance.updateDioHeaders();
   }
 
-  insertUserData(UserModel userData,String token) async {
+  insertUserData(UserModel userData, String token) async {
     final SharedPreferences? prefs = await _prefs;
 
     await prefs?.setString('token', token);
     await prefs?.setString('id', userData.id.toString());
     await prefs?.setString('name', userData.name);
     await prefs?.setString('email', userData.email);
-    // await prefs?.setString('phone_number', userData.phone);
+
     await prefs?.setString('role', userData.userRole.toString());
     // await prefs?.setString('image', image);
     await initiateSession();

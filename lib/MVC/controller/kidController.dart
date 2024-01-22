@@ -22,11 +22,12 @@ class KidsController extends GetxController {
   getAllKids() async {
     try {
       Isloading.value = true;
-      // final PopularData = await ExploreAPI.getPopulerProductData();
+      final DataList = await AppService.getInstance.getAllChildrenByParentId();
 
+      KidsList.value = DataList;
       // KidsList.value = MockData.dummyKidsData;
 
-      // print('KidsList: ${KidsList.length}');
+      print('KidsList: ${KidsList.length}');
       Isloading.value = false;
     } catch (e) {
       Isloading.value = false;
@@ -34,7 +35,7 @@ class KidsController extends GetxController {
     }
   }
 
-  AddKids(BuildContext context ,KidsModel kidData) async {
+  AddKids(BuildContext context, KidsModel kidData) async {
     try {
       final PopularData = await AppService.getInstance.addKid(context, kidData);
 

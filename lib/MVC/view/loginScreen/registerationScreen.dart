@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodeoapp/MVC/model/userModel.dart';
 import 'package:foodeoapp/MVC/view/loginScreen/LoginWithEmailScreen.dart';
 import 'package:foodeoapp/components/custom_textfiled.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/navigation.dart';
 import 'package:foodeoapp/constant/theme.dart';
+import 'package:foodeoapp/services/app_service.dart';
 import 'package:get/get.dart';
 import '../../../components/round_button.dart';
 import '../../../constant/flutter_toast.dart';
@@ -31,7 +33,7 @@ class RegisterationScreen extends StatelessWidget {
   RxBool showpassword = false.obs;
   RxBool showConfirmpassword = false.obs;
   RxBool apihitting = false.obs;
-
+  RxInt UserType = 1.obs;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ThemeHelper>(builder: (themecontroller) {
@@ -85,7 +87,7 @@ class RegisterationScreen extends StatelessWidget {
                                 focusNode: _nameFocusNode,
                                 onsubmit: () {},
                                 onchange: (value) {
-                                  apihitting.value = true;
+                                  apihitting.value = false;
                                 },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -99,30 +101,30 @@ class RegisterationScreen extends StatelessWidget {
                                   return null;
                                 },
                               ),
-                              SizedBox(height: 12.sp),
-                              CustomTextFieldWidget(
-                                enabled: true,
-                                label: 'Phone Number',
-                                controller: phoneController,
-                                hintText: "Enter Phone Number",
-                                inputType: TextInputType.phone,
-                                focusNode: _phoneFocusNode,
-                                onsubmit: () {},
-                                onchange: (value) {
-                                  apihitting.value = true;
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter an email address';
-                                  }
-                                  // const emailPattern =
-                                  //     r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)*(\.[a-z]{2,4})$';
-                                  // if (!RegExp(emailPattern).hasMatch(value)) {
-                                  //   return 'Please enter a valid email address';
-                                  // }
-                                  return null;
-                                },
-                              ),
+                              // SizedBox(height: 12.sp),
+                              // CustomTextFieldWidget(
+                              //   enabled: true,
+                              //   label: 'Phone Number',
+                              //   controller: phoneController,
+                              //   hintText: "Enter Phone Number",
+                              //   inputType: TextInputType.phone,
+                              //   focusNode: _phoneFocusNode,
+                              //   onsubmit: () {},
+                              //   onchange: (value) {
+                              //     apihitting.value = true;
+                              //   },
+                              //   validator: (value) {
+                              //     if (value == null || value.isEmpty) {
+                              //       return 'Please enter an email address';
+                              //     }
+                              //     // const emailPattern =
+                              //     //     r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)*(\.[a-z]{2,4})$';
+                              //     // if (!RegExp(emailPattern).hasMatch(value)) {
+                              //     //   return 'Please enter a valid email address';
+                              //     // }
+                              //     return null;
+                              //   },
+                              // ),
                               SizedBox(height: 12.sp),
                               CustomTextFieldWidget(
                                 enabled: true,
@@ -133,7 +135,7 @@ class RegisterationScreen extends StatelessWidget {
                                 focusNode: _emailFocusNode,
                                 onsubmit: () {},
                                 onchange: (value) {
-                                  apihitting.value = true;
+                                  apihitting.value = false;
                                 },
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -158,7 +160,7 @@ class RegisterationScreen extends StatelessWidget {
                                     focusNode: _ConfirmPasswordFocusNode,
                                     onsubmit: () {},
                                     onchange: (value) {
-                                      apihitting.value = true;
+                                      apihitting.value = false;
                                     },
                                     validator: (input) => input!.length < 3
                                         ? 'Please enter at least 3 characters'
@@ -191,7 +193,7 @@ class RegisterationScreen extends StatelessWidget {
                                     focusNode: _passwordFocusNode,
                                     onsubmit: () {},
                                     onchange: (value) {
-                                      apihitting.value = true;
+                                      apihitting.value = false;
                                     },
                                     validator: (input) => input!.length < 3
                                         ? 'Please enter at least 3 characters'
@@ -213,10 +215,61 @@ class RegisterationScreen extends StatelessWidget {
                                       ),
                                     ),
                                   )),
+                              SizedBox(height: 20.sp),
+                              Obx(() => Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          UserType.value = 1;
+                                        },
+                                        child: Icon(
+                                          UserType.value == 1
+                                              ? Icons.check_circle_outline
+                                              : Icons.circle_outlined,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5.sp,
+                                      ),
+                                      Text(
+                                        'Parent',
+                                        style: TextStyle(
+                                            color: themecontroller.colorPrimary,
+                                            fontSize: 8.sp,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      SizedBox(
+                                        width: 30.sp,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          UserType.value = 0;
+                                        },
+                                        child: Icon(
+                                          UserType.value == 0
+                                              ? Icons.check_circle_outline
+                                              : Icons.circle_outlined,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5.sp,
+                                      ),
+                                      Text(
+                                        'School',
+                                        style: TextStyle(
+                                            color: themecontroller.colorPrimary,
+                                            fontSize: 8.sp,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  )),
                             ],
                           ),
                         ),
-                        SizedBox(height: 35.sp),
+                        SizedBox(height: 20.sp),
                         Obx(() => RoundButton(
                               gradient: true,
                               margin: 0,
@@ -231,18 +284,27 @@ class RegisterationScreen extends StatelessWidget {
                                 await internetController.internetCheckerFun();
 
                                 if (_formkey.currentState!.validate()) {
-                                  if (internetController
-                                          .isInternetConnected.value ==
-                                      true) {
-                                    apihitting.value = true;
-                                    // controller.loginWithEmail(
-                                    //     context,
-                                    //     controller.emailController.value.text,
-                                    //     controller.passwordController.value.text);
-                                  } else {
-                                    FlutterToastDisplay.getInstance.showToast(
-                                        "Please check your internet");
-                                  }
+                                  // if (internetController
+                                  //         .isInternetConnected.value ==
+                                  //     true) {
+                                  apihitting.value = true;
+                                  var UserData = UserModel(
+                                      id: 1,
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      image: '',
+                                      password: PasswordController.text,
+                                      userRole: UserType.value == 1
+                                          ? 'USER'
+                                          : 'SCHOOL',
+                                      createDate: DateTime.now().toString(),
+                                      updateDate: DateTime.now().toString());
+                                  AppService.getInstance
+                                      .registeration(context, UserData);
+                                  // } else {
+                                  //   FlutterToastDisplay.getInstance.showToast(
+                                  //       "Please check your internet");
+                                  // }
                                 }
                               },
                             )),
@@ -251,14 +313,15 @@ class RegisterationScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigation.getInstance.pagePushAndReplaceNavigation(context, LoginWithEmail());
+                            Navigation.getInstance.pagePushAndReplaceNavigation(
+                                context, LoginWithEmail());
                           },
                           child: RichText(
                             textAlign: TextAlign.center,
                             text: TextSpan(
                               style: TextStyle(
-                                  color:
-                                      themecontroller.textcolor.withOpacity(0.5),
+                                  color: themecontroller.textcolor
+                                      .withOpacity(0.5),
                                   fontSize: 11.sp),
                               children: <TextSpan>[
                                 TextSpan(
