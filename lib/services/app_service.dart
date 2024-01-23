@@ -155,17 +155,16 @@ class AppService {
     }
   }
 
-  Future<void> addProduct(BuildContext context, KidsModel kidData) async {
+  Future<void> addProduct(BuildContext context, ProductModel Data) async {
     try {
-      var response = await dio.post(Constants.PostRegister, data: {
-        "name": kidData.name,
-        "parentId": kidData.parentId,
-        "schoolId": kidData.schoolId,
-        "classNo": kidData.classNo
+      var response = await dio.post(Constants.AddProduct, data: {
+        "productsName": Data.name,
+        "productsPrice": Data.Price,
+        "schoolId": Data.schoolId,
       });
 
-      if (response.data['status']) {
-        log("addKid API =>${response.data['status']}👌✅");
+      if (response.statusCode == 200) {
+        log("addKid API =>👌✅ ${response.statusCode}");
         final json = response.data;
         Navigator.pop(context);
       } else {

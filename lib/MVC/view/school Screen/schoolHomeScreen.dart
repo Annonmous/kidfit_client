@@ -13,6 +13,7 @@ import 'package:foodeoapp/components/spring_widget.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/navigation.dart';
 import 'package:foodeoapp/constant/theme.dart';
+import 'package:foodeoapp/helper/data_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
@@ -21,7 +22,6 @@ class SchoolHomeScreen extends StatelessWidget {
 
   @override
   final homeController = Get.put(HomeController());
-
 
   final NameController = TextEditingController();
   final FocusNode _NameFocusNode = FocusNode();
@@ -40,6 +40,7 @@ class SchoolHomeScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     searchFilter('');
+    homeController.getAllProductData(int.parse(DataStroge.currentUserId.value));
     return GetBuilder<ThemeHelper>(
         builder: (themeController) => AnnotatedRegion(
               value: themeController.systemUiOverlayStyleForwhite,

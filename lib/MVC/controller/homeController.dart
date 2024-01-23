@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:foodeoapp/MVC/model/CartModel.dart';
 import 'package:foodeoapp/MVC/model/ExploreModel.dart';
 import 'package:foodeoapp/MVC/model/kidsModel.dart';
 import 'package:foodeoapp/MVC/model/product_model.dart';
 import 'package:foodeoapp/data/mockData.dart';
+import 'package:foodeoapp/helper/data_storage.dart';
 import 'package:foodeoapp/services/app_service.dart';
 import 'package:get/get.dart';
 
@@ -65,9 +67,16 @@ class HomeController extends GetxController {
     }
   }
 
-
-
-
+  AddProduct(BuildContext context, ProductModel ProductData) async {
+    try {
+      final DataList =
+          await AppService.getInstance.addProduct(context, ProductData);
+      getAllProductData(int.parse(DataStroge.currentUserId.value));
+    } catch (e) {
+      Isloading.value = false;
+      print('error getPopulerProductData view model:$e');
+    }
+  }
 
   // getSearchProduct(String search) async {
   //   try {

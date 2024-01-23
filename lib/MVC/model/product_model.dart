@@ -7,7 +7,7 @@ class ProductModel {
   int Price;
   DateTime createDate;
   DateTime updateDate;
-  final SchoolModel school;
+  final SchoolModel? school;
   ProductModel({
     required this.id,
     required this.name,
@@ -17,7 +17,7 @@ class ProductModel {
     required this.Price,
     required this.createDate,
     required this.updateDate,
-    required this.school,
+     this.school,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodeoapp/MVC/controller/homeController.dart';
 
 import 'package:foodeoapp/MVC/controller/kidController.dart';
 import 'package:foodeoapp/MVC/model/kidsModel.dart';
+import 'package:foodeoapp/MVC/model/product_model.dart';
 import 'package:foodeoapp/components/custom_appbar.dart';
 import 'package:foodeoapp/components/custom_textfiled.dart';
 
@@ -14,6 +17,7 @@ import 'package:foodeoapp/constant/flutter_toast.dart';
 
 import 'package:foodeoapp/constant/theme.dart';
 import 'package:foodeoapp/helper/data_storage.dart';
+import 'package:foodeoapp/helper/getx_helper.dart';
 import 'package:foodeoapp/helper/internet_controller.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +27,7 @@ class AddProductScreen extends StatelessWidget {
   final internetController = Get.put(InternetController());
   final kidsController = Get.put(KidsController());
   final homeController = Get.put(HomeController());
+  final getcontroller = Get.put(GetxControllersProvider());
   RxBool apihitting = false.obs;
   final NameController = TextEditingController();
   final FocusNode _NameFocusNode = FocusNode();
@@ -58,6 +63,37 @@ class AddProductScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Obx(
+                          () => SpringWidget(
+                            onTap: () {
+                              getcontroller.getImage();
+                            },
+                            child: getcontroller.imagePath.value.isNotEmpty
+                                ? Container(
+                                    height: 200.sp,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: FileImage(File(
+                                              getcontroller.imagePath.value)),
+                                        )),
+                                  )
+                                : Container(
+                                    height: 200.sp,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: AssetImage(getcontroller
+                                              .defaultImagePath
+                                              .toString()),
+                                        )),
+                                  ),
+                          ),
+                        ),
                         CustomTextFieldWidget(
                           enabled: true,
                           label: '',
@@ -78,119 +114,33 @@ class AddProductScreen extends StatelessWidget {
                             return null;
                           },
                         ),
-                        SizedBox(
-                          height: 20.sp,
-                        ),
-                        SpringWidget(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Dialog(child: GetBuilder<ThemeHelper>(
-                                    builder: (themecontroller) {
-                                  return Container(
-                                    height: 300.sp,
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          if (homeController
-                                              .schoolList.isNotEmpty)
-                                            SizedBox(
-                                              height: 30.sp,
-                                            ),
-                                          if (homeController
-                                              .schoolList.isNotEmpty)
-                                            Text(
-                                              'Select School',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16.sp,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          if (homeController
-                                              .schoolList.isNotEmpty)
-                                            SizedBox(
-                                              height: 30.sp,
-                                            ),
-                                          Obx(
-                                            () => homeController
-                                                    .schoolList.isEmpty
-                                                ? Text(
-                                                    'No School added yet..',
-                                                    style: TextStyle(
-                                                        color: themecontroller
-                                                            .colorPrimary),
-                                                  )
-                                                : Container(
-                                                    height: 200.sp,
-                                                    child: ListView.builder(
-                                                      itemCount: homeController
-                                                          .schoolList.length,
-                                                      itemBuilder:
-                                                          (BuildContext context,
-                                                              int index) {
-                                                        return SpringWidget(
-                                                          onTap: () {
-                                                            SelectedSchoolId
-                                                                    .value =
-                                                                homeController
-                                                                    .schoolList[
-                                                                        index]
-                                                                    .id;
-
-                                                            SelectedSchool
-                                                                    .value =
-                                                                homeController
-                                                                    .schoolList[
-                                                                        index]
-                                                                    .name;
-
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: ListTile(
-                                                            title: Text(
-                                                                homeController
-                                                                    .schoolList[
-                                                                        index]
-                                                                    .name),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                          )
-                                        ]),
-                                  );
-                                }));
-                              },
-                            );
+                        CustomTextFieldWidget(
+                          enabled: true,
+                          label: '',
+                          controller: PriceController,
+                          fieldColor: themecontroller.colorwhite,
+                          hintText: "Price",
+                          inputType: TextInputType.number,
+                          focusNode: _PriceFocusNode,
+                          onsubmit: () {},
+                          onchange: (value) {
+                            apihitting.value = false;
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white),
-                            child: ListTile(
-                              title: Obx(
-                                () => Text(
-                                  SelectedSchool.value == ''
-                                      ? 'Select School ..'
-                                      : SelectedSchool.value,
-                                  style: TextStyle(
-                                      color: themecontroller.textcolor,
-                                      fontSize: 12.sp),
-                                ),
-                              ),
-                            ),
-                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your Class No';
+                            }
+
+                            return null;
+                          },
                         ),
                         CustomTextFieldWidget(
                           enabled: true,
                           label: '',
                           controller: PriceController,
                           fieldColor: themecontroller.colorwhite,
-                          hintText: "Class No",
+                          hintText: "Description",
+                          maxLines: 3,
                           inputType: TextInputType.name,
                           focusNode: _PriceFocusNode,
                           onsubmit: () {},
@@ -215,7 +165,7 @@ class AddProductScreen extends StatelessWidget {
                               height: 60.sp,
                               loading: apihitting.value,
                               disabled: apihitting.value,
-                              title: 'Add',
+                              title: 'Add Product',
                               iconColor: themecontroller.colorwhite,
                               textColor: themecontroller.colorwhite,
                               onTap: () async {
@@ -226,18 +176,17 @@ class AddProductScreen extends StatelessWidget {
                                           .isInternetConnected.value ==
                                       true) {
                                     apihitting.value = true;
-                                    var kidData = KidsModel(
+                                    var Data = ProductModel(
                                         id: 1,
                                         name: NameController.text,
-                                        parentId: int.parse(
+                                        schoolId: int.parse(
                                             DataStroge.currentUserId.value),
-                                        schoolId: SelectedSchoolId.value,
-                                        classNo: PriceController.text,
                                         image: '',
-                                        createdAt: DateTime.now().toString(),
-                                        updatedAt: DateTime.now().toString());
-                                    kidsController.AddKids(context, kidData);
-                                    
+                                        description: '',
+                                        createDate: DateTime.now(),
+                                        updateDate: DateTime.now(),
+                                        Price: int.parse(PriceController.text));
+                                    homeController.AddProduct(context, Data);
                                   } else {
                                     FlutterToastDisplay.getInstance.showToast(
                                         "Please check your internet");
