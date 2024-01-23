@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodeoapp/MVC/view/kidsScreen/KIdsListScreen.dart';
 import 'package:foodeoapp/MVC/view/loginScreen/LoginWithEmailScreen.dart';
+import 'package:foodeoapp/MVC/view/school%20Screen/addProductScreen.dart';
 import 'package:foodeoapp/components/image_widget.dart';
 import 'package:foodeoapp/constant/navigation.dart';
 import 'package:foodeoapp/constant/theme.dart';
@@ -88,15 +89,21 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            ListTile(
-              title: Text('Children List'),
-              onTap: () {
-                Navigation.getInstance
-                    .screenNavigation(context, KidsListScreen());
-
-
-              },
-            ),
+            DataStroge.userRole.value == 'USER'
+                ? ListTile(
+                    title: Text('Children List'),
+                    onTap: () {
+                      Navigation.getInstance
+                          .screenNavigation(context, KidsListScreen());
+                    },
+                  )
+                : ListTile(
+                    title: Text('Add Product'),
+                    onTap: () {
+                      Navigation.getInstance
+                          .screenNavigation(context, AddProductScreen());
+                    },
+                  ),
             ListTile(
               title: Text(
                 'Logout',
