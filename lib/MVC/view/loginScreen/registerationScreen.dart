@@ -56,17 +56,24 @@ class RegisterationScreen extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 30),
-                          child: SvgPicture.asset(
-                            'assets/icons/foodeo.svg',
-                            width: 70.sp,
-                            height: 75.sp,
+                          child: Container(
+                            height: 100.sp,
+                            width: 200.sp,
+                            padding: const EdgeInsets.all(25),
+                            decoration: BoxDecoration(
+                                // color: themecontroller.colorwhite,
+
+                                image: DecorationImage(
+                                    image: AssetImage('assets/images/logo.png'
+                                        // "assets/appicon.png",
+                                        ))),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: Constants.screenPadding),
                           child: Text(
-                            'Watch, Order, Enjoy',
+                            'Eat, Order, Enjoy',
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,

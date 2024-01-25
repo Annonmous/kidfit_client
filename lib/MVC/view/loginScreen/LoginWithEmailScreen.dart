@@ -29,7 +29,7 @@ class LoginWithEmail extends StatelessWidget {
   final FocusNode _passwordFocusNode = FocusNode();
   RxBool showpassword = false.obs;
   RxBool apihitting = false.obs;
-
+  RxInt UserType = 1.obs;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ThemeHelper>(builder: (themecontroller) {
@@ -51,17 +51,24 @@ class LoginWithEmail extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 30),
-                        child: SvgPicture.asset(
-                          'assets/icons/foodeo.svg',
-                          width: 70.sp,
-                          height: 75.sp,
+                        child: Container(
+                          height: 100.sp,
+                          width: 200.sp,
+                          padding: const EdgeInsets.all(25),
+                          decoration: BoxDecoration(
+                              // color: themecontroller.colorwhite,
+
+                              image: DecorationImage(
+                                  image: AssetImage('assets/images/logo.png'
+                                      // "assets/appicon.png",
+                                      ))),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: Constants.screenPadding),
                         child: Text(
-                          'Watch, Order, Enjoy',
+                          'Eat, Order, Enjoy',
                           style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w600,
@@ -124,10 +131,61 @@ class LoginWithEmail extends StatelessWidget {
                                     ),
                                   ),
                                 )),
+                            SizedBox(height: 20.sp),
+                            Obx(() => Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        UserType.value = 1;
+                                      },
+                                      child: Icon(
+                                        UserType.value == 1
+                                            ? Icons.check_circle_outline
+                                            : Icons.circle_outlined,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5.sp,
+                                    ),
+                                    Text(
+                                      'Parent',
+                                      style: TextStyle(
+                                          color: themecontroller.colorPrimary,
+                                          fontSize: 8.sp,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(
+                                      width: 30.sp,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        UserType.value = 0;
+                                      },
+                                      child: Icon(
+                                        UserType.value == 0
+                                            ? Icons.check_circle_outline
+                                            : Icons.circle_outlined,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5.sp,
+                                    ),
+                                    Text(
+                                      'School',
+                                      style: TextStyle(
+                                          color: themecontroller.colorPrimary,
+                                          fontSize: 8.sp,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                )),
+                            SizedBox(height: 20.sp),
                           ],
                         ),
                       ),
-                      SizedBox(height: 35.sp),
                       Obx(() => RoundButton(
                             gradient: true,
                             margin: 0,
@@ -150,7 +208,8 @@ class LoginWithEmail extends StatelessWidget {
                                 AppService.getInstance.login(
                                     context,
                                     emailController.text,
-                                    PasswordController.text);
+                                    PasswordController.text,
+                                    UserType.value.toString());
                                 apihitting.value = false;
                                 // } else {
                                 //   FlutterToastDisplay.getInstance

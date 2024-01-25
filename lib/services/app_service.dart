@@ -42,11 +42,12 @@ class AppService {
   ///2) Email
   ///3) password
   Future<void> login(
-      BuildContext context, String Email, String password) async {
+      BuildContext context, String Email, String password,String role) async {
     try {
       var response = await dio.post(Constants.PostLogin, data: {
         'email': Email,
         'password': password,
+        'role': role,
       });
 
       if (response.statusCode == 200) {

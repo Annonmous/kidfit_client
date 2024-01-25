@@ -30,7 +30,7 @@ class SearchScreen extends StatelessWidget {
 
   void searchFilter(String search) {
     // SearchProductList.clear();
-    if (search.isEmpty) {
+    if (search == '') {
       SearchProductList.value = homeController.ProductList;
     } else {
       SearchProductList.value = homeController.ProductList.where((product) =>

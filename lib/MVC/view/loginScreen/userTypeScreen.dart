@@ -74,16 +74,17 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
               children: [
                 Expanded(flex: 2, child: SizedBox(height: 40.sp)),
                 Container(
-                  height: 100.sp,
-                  width: 100.sp,
+                  height: 300.sp,
+                  width: 300.sp,
                   padding: const EdgeInsets.all(25),
                   decoration: BoxDecoration(
-                      color: themecontroller.colorwhite,
-                      shape: BoxShape.circle),
-                  child: SvgPicture.asset(
-                    "assets/icons/Yummy.svg",
-                    color: themecontroller.colorPrimary,
-                  ),
+                      // color: themecontroller.colorwhite,
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/logo.png'
+                        // "assets/appicon.png",
+                      ))),
                 ),
                 Expanded(flex: 2, child: SizedBox(height: 30.sp)),
                 SpringWidget(
