@@ -22,21 +22,24 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-            height: 300.sp,
-            width: 300.sp,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: QRView(
-                overlay: QrScannerOverlayShape(
-                  borderRadius: 20,
-                  borderLength: 30.sp,
-                  borderWidth: 6.sp,
-                  borderColor: themeController.colorPrimary,
+          Center(
+            child: Container(
+              height: 300.sp,
+              width: 300.sp,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: QRView(
+                  overlay: QrScannerOverlayShape(
+                    borderRadius: 20,
+                    borderLength: 30.sp,
+                    borderWidth: 6.sp,
+                    borderColor: themeController.colorPrimary,
+                  ),
+                  key: _qrKey,
+                  onQRViewCreated: _onQRViewCreated,
                 ),
-                key: _qrKey,
-                onQRViewCreated: _onQRViewCreated,
               ),
             ),
           ),
@@ -55,7 +58,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           // Call a function to manually trigger QR code scanning
           if (_qrViewController != null) {
             _qrViewController!.pauseCamera();
-            
+
           }
         },
         child: CircleAvatar(

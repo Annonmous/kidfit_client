@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodeoapp/MVC/controller/homeController.dart';
 import 'package:foodeoapp/constant/theme.dart';
+import 'package:foodeoapp/helper/data_storage.dart';
 import 'package:get/get.dart';
 import '../constant/constants.dart';
 import 'spring_widget.dart';
@@ -61,28 +62,33 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             fontSize: 16.sp,
             fontWeight: FontWeight.w600),
       ),
-      actions: [
-        showShop == true
-            ? SpringWidget(
-                onTap: () {},
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 10.sp, horizontal: Constants.screenPadding),
-                  child: Obx(
-                    () => Badge(
-                      backgroundColor: themeController.colorPrimary,
-                      label: Text(homecontroller.CartList.length.toString()),
-                      child: SvgPicture.asset(
-                        'assets/icons/shop.svg',
-                        color: leadingColor ?? themeController.colorPrimary,
-                        height: 20.sp,
+      actions: DataStroge.userRole.value == 'USER'
+          ? [
+              showShop == true
+                  ? SpringWidget(
+                      onTap: () {},
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.sp,
+                            horizontal: Constants.screenPadding),
+                        child: Obx(
+                          () => Badge(
+                            backgroundColor: themeController.colorPrimary,
+                            label:
+                                Text(homecontroller.CartList.length.toString()),
+                            child: SvgPicture.asset(
+                              'assets/icons/shop.svg',
+                              color:
+                                  leadingColor ?? themeController.colorPrimary,
+                              height: 20.sp,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              )
-            : SizedBox(),
-      ],
+                    )
+                  : SizedBox(),
+            ]
+          : [],
     );
   }
 

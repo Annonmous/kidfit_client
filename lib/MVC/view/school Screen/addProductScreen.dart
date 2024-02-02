@@ -172,24 +172,30 @@ class AddProductScreen extends StatelessWidget {
                                 await internetController.internetCheckerFun();
 
                                 if (_formkey.currentState!.validate()) {
-                                  if (internetController
-                                          .isInternetConnected.value ==
-                                      true) {
-                                    apihitting.value = true;
-                                    var Data = ProductModel(
-                                        id: 1,
-                                        name: NameController.text,
-                                        schoolId: int.parse(
-                                            DataStroge.currentUserId.value),
-                                        image: '',
-                                        description: '',
-                                        createDate: DateTime.now(),
-                                        updateDate: DateTime.now(),
-                                        Price: int.parse(PriceController.text));
-                                    homeController.AddProduct(context, Data);
+                                  if (getcontroller.imagePath.value != '') {
+                                    if (internetController
+                                            .isInternetConnected.value ==
+                                        true) {
+                                      apihitting.value = true;
+                                      var Data = ProductModel(
+                                          id: 1,
+                                          name: NameController.text,
+                                          schoolId: int.parse(
+                                              DataStroge.currentUserId.value),
+                                          image: getcontroller.imagePath.value,
+                                          description: '',
+                                          createDate: DateTime.now(),
+                                          updateDate: DateTime.now(),
+                                          Price:
+                                              int.parse(PriceController.text));
+                                      homeController.AddProduct(context, Data);
+                                    } else {
+                                      FlutterToastDisplay.getInstance.showToast(
+                                          "Please check your internet");
+                                    }
                                   } else {
-                                    FlutterToastDisplay.getInstance.showToast(
-                                        "Please check your internet");
+                                    FlutterToastDisplay.getInstance
+                                        .showToast("Please Add Product image");
                                   }
                                 }
                               },

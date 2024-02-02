@@ -99,55 +99,76 @@ class ProductDetailsScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 20.sp),
-                                  child: RoundButton(
-                                    gradient: true,
-                                    margin: 0,
-                                    backgroundColor:
-                                        themeController.colorPrimary,
-                                    height: 30.sp,
-                                    icon: 'assets/icons/shop.svg',
-                                    title: 'Add To Cart',
-                                    iconColor: themeController.colorwhite,
-                                    textColor: themeController.colorwhite,
-                                    onTap: () async {
-                                      if (homeController.SelectedKidId.value !=
-                                          0) {
-                                        var cartData = CartModel(
-                                            kid_Id: homeController
-                                                .SelectedKidId.value,
-                                            parentId: 1,
-                                            product_id: ProductData.id,
-                                            product_name: ProductData.name,
-                                            product_image: ProductData.image,
-                                            Kid_name: homeController
-                                                .SelectedKidName.value);
+                                if (DataStroge.userRole.value == 'USER')
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 20.sp),
+                                    child: RoundButton(
+                                      gradient: true,
+                                      margin: 0,
+                                      backgroundColor:
+                                          themeController.colorPrimary,
+                                      height: 30.sp,
+                                      icon: 'assets/icons/shop.svg',
+                                      title: 'Add To Cart',
+                                      iconColor: themeController.colorwhite,
+                                      textColor: themeController.colorwhite,
+                                      onTap: () async {
+                                        if (homeController
+                                                .SelectedKidId.value !=
+                                            0) {
+                                          var cartData = CartModel(
+                                              kid_Id: homeController
+                                                  .SelectedKidId.value,
+                                              parentId: 1,
+                                              product_id: ProductData.id,
+                                              product_name: ProductData.name,
+                                              product_image: ProductData.image,
+                                              Kid_name: homeController
+                                                  .SelectedKidName.value);
 
-                                        var exists =
-                                            homeController.CartList.where((e) =>
-                                                e.Kid_name ==
-                                                    cartData.Kid_name &&
-                                                e.kid_Id == cartData.kid_Id &&
-                                                e.parentId ==
-                                                    cartData.parentId &&
-                                                e.product_id ==
-                                                    cartData.product_id);
+                                          var exists =
+                                              homeController.CartList.where(
+                                                  (e) =>
+                                                      e.Kid_name ==
+                                                          cartData.Kid_name &&
+                                                      e.kid_Id ==
+                                                          cartData.kid_Id &&
+                                                      e.parentId ==
+                                                          cartData.parentId &&
+                                                      e.product_id ==
+                                                          cartData.product_id);
 
-                                        if (exists.isEmpty) {
-                                          homeController.addAndRemoveCart(
-                                              cartData, 1);
+                                          if (exists.isEmpty) {
+                                            homeController.addAndRemoveCart(
+                                                cartData, 1);
+                                          } else {
+                                            FlutterToastDisplay.getInstance
+                                                .showToast(
+                                                    "This Product is already exist");
+                                          }
                                         } else {
                                           FlutterToastDisplay.getInstance.showToast(
-                                              "This Product is already exist");
+                                              "Please select kid first from home screen");
                                         }
-                                      } else {
-                                        FlutterToastDisplay.getInstance.showToast(
-                                            "Please select kid first from home screen");
-                                      }
-                                    },
+                                      },
+                                    ),
+                                  ),
+                                SizedBox(
+                                  height: 20.sp,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Description',
+                                    softWrap: true,
+                                    maxLines: 5,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis,
+                                      color: themeController.textcolor,
+                                      fontSize: 12.sp,
+                                    ),
                                   ),
                                 ),
                                 Align(

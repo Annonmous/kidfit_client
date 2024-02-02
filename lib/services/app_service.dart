@@ -1,6 +1,7 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
+import 'package:dio/src/form_data.dart' as getFormData;
+import 'package:dio/src/multipart_file.dart' as getFormDataFile;
 import 'package:flutter/material.dart';
 import 'package:foodeoapp/MVC/model/kidsModel.dart';
 import 'package:foodeoapp/MVC/model/product_model.dart';
@@ -42,7 +43,7 @@ class AppService {
   ///2) Email
   ///3) password
   Future<void> login(
-      BuildContext context, String Email, String password,String role) async {
+      BuildContext context, String Email, String password, String role) async {
     try {
       var response = await dio.post(Constants.PostLogin, data: {
         'email': Email,
@@ -158,14 +159,21 @@ class AppService {
 
   Future<void> addProduct(BuildContext context, ProductModel Data) async {
     try {
-      var response = await dio.post(Constants.AddProduct, data: {
-        "productsName": Data.name,
-        "productsPrice": Data.Price,
-        "schoolId": Data.schoolId,
-      });
+        final formData = getFormData.FormData();
+      formData.fields.add(MapEntry('productsName', Data.name));
+      formData.fields.add(MapEntry('productsPrice', Data.Price.toString()));
+      formData.fields.add(MapEntry('schoolId', Data.schoolId.toString()));
+
+      formData.files.add(MapEntry(
+        'image',
+        await getFormDataFile.MultipartFile.fromFile(Data.image),
+      ));
+      var response = await dio.post(Constants.AddProduct, data:formData);
+
+    
 
       if (response.statusCode == 200) {
-        log("addKid API =>👌✅ ${response.statusCode}");
+        log("addProduct API =>👌✅ ${response.statusCode}");
         final json = response.data;
         Navigator.pop(context);
       } else {
