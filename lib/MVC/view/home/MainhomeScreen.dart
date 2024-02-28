@@ -7,6 +7,7 @@ import 'package:foodeoapp/MVC/view/home/productDetailScreen.dart';
 import 'package:foodeoapp/components/ProductCard.dart';
 import 'package:foodeoapp/components/custom_appbar.dart';
 import 'package:foodeoapp/components/drawer.dart';
+import 'package:foodeoapp/components/small_loader.dart';
 import 'package:foodeoapp/components/spring_widget.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/navigation.dart';
@@ -180,47 +181,51 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         flex: 9,
                         child: Obx(
-                          () => homeController.ProductList.isEmpty
-                              ? Center(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/No-product.png'),
+                          () => homeController.IsProductloading.isTrue
+                              ? SmallLoader()
+                              : homeController.ProductList.isEmpty
+                                  ? Center(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/No-product.png'),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(
+                                      child: GridView.builder(
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                crossAxisSpacing: 10,
+                                                mainAxisSpacing: 10),
+                                        itemCount:
+                                            homeController.ProductList.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          var list = homeController.ProductList;
+                                          return SpringWidget(
+                                            onTap: () {
+                                              Navigation.getInstance
+                                                  .screenNavigation(
+                                                      context,
+                                                      ProductDetailsScreen(
+                                                          ProductData:
+                                                              list[index]));
+                                            },
+                                            child: productcard(
+                                                image: list[index].image,
+                                                name: list[index].name,
+                                                price: list[index]
+                                                    .Price
+                                                    .toString(),
+                                                SchoolImage: list[index].image),
+                                          );
+                                        },
                                       ),
                                     ),
-                                  ),
-                                )
-                              : Container(
-                                  child: GridView.builder(
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            crossAxisSpacing: 10,
-                                            mainAxisSpacing: 10),
-                                    itemCount:
-                                        homeController.ProductList.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      var list = homeController.ProductList;
-                                      return SpringWidget(
-                                        onTap: () {
-                                          Navigation.getInstance
-                                              .screenNavigation(
-                                                  context,
-                                                  ProductDetailsScreen(
-                                                      ProductData:
-                                                          list[index]));
-                                        },
-                                        child: productcard(
-                                            image: list[index].image,
-                                            name: list[index].name,
-                                            price: list[index].Price.toString(),
-                                            SchoolImage: list[index].image),
-                                      );
-                                    },
-                                  ),
-                                ),
                         ),
                       ),
                     ]),

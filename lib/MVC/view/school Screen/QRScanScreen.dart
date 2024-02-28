@@ -4,6 +4,7 @@ import 'package:foodeoapp/components/spring_widget.dart';
 import 'package:foodeoapp/constant/theme.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+// import 'package:barcode_scan/barcode_scan.dart';
 
 class QRCodeScannerScreen extends StatefulWidget {
   @override

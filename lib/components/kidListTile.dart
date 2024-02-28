@@ -76,7 +76,7 @@ class KidListTile extends StatelessWidget {
             //   ),
             // ),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-              Icon(Icons.edit, size: 20.sp),
+              // Icon(Icons.edit, size: 20.sp),
               SizedBox(
                 width: 20.sp,
               ),
@@ -103,10 +103,18 @@ class KidListTile extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              KidsData.name,
+                              'Student Name: ${KidsData.name}',
                               style: TextStyle(
                                   color: themecontroller.colorPrimary,
-                                  fontSize: 16.sp,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(height: 20.sp,),
+                            Text(
+                              'Class: ${KidsData.classNo}',
+                              style: TextStyle(
+                                  color: themecontroller.colorPrimary,
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.w600),
                             ),
                             // Text(

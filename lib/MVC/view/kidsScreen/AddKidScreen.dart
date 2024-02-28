@@ -73,6 +73,8 @@ class AddKidScreen extends StatelessWidget {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter an Name';
+                            } else if (value.length > 25) {
+                              return 'name limit: 25';
                             }
 
                             return null;
@@ -191,15 +193,21 @@ class AddKidScreen extends StatelessWidget {
                           controller: ClassNoController,
                           fieldColor: themecontroller.colorwhite,
                           hintText: "Class No",
-                          inputType: TextInputType.name,
+                          inputType: TextInputType.number,
                           focusNode: _ClassNoFocusNode,
                           onsubmit: () {},
                           onchange: (value) {
                             apihitting.value = false;
                           },
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
+                            if (value == null) {
                               return 'Please enter your Class No';
+                            } else if (value.length > 3) {
+                              if (int.parse(value) > 10) {
+                                return 'the entered value should be less then 10';
+                              } else {
+                                return 'Please enter 2 digit value';
+                              }
                             }
 
                             return null;
@@ -222,6 +230,7 @@ class AddKidScreen extends StatelessWidget {
                                 await internetController.internetCheckerFun();
 
                                 if (_formkey.currentState!.validate()) {
+                                 
                                   if (internetController
                                           .isInternetConnected.value ==
                                       true) {
@@ -237,7 +246,6 @@ class AddKidScreen extends StatelessWidget {
                                         createdAt: DateTime.now().toString(),
                                         updatedAt: DateTime.now().toString());
                                     kidsController.AddKids(context, kidData);
-                                    
                                   } else {
                                     FlutterToastDisplay.getInstance.showToast(
                                         "Please check your internet");

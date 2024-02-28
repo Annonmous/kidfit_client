@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foodeoapp/MVC/view/loginScreen/LoginWithEmailScreen.dart';
 import 'package:foodeoapp/components/image_widget.dart';
 import 'package:foodeoapp/constant/constants.dart';
+import 'package:foodeoapp/constant/navigation.dart';
 import 'package:foodeoapp/constant/theme.dart';
 import 'package:foodeoapp/helper/data_storage.dart';
 import 'package:get/get.dart';
@@ -14,6 +16,7 @@ class ProfileScreen extends StatelessWidget {
   final FocusNode _searchFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
+    final _pref = DataStroge();
     return GetBuilder<ThemeHelper>(builder: (themecontroller) {
       return AnnotatedRegion(
           value: themecontroller.systemUiOverlayStyleForPrimary,
@@ -158,6 +161,12 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           ListTile(
+                            onTap: () async {
+                              await _pref.logout();
+                              Navigation.getInstance
+                                  .pagePushAndReplaceNavigation(
+                                      context, LoginWithEmail());
+                            },
                             leading: Text(
                               'Logout',
                               style: TextStyle(

@@ -18,6 +18,7 @@ class HomeController extends GetxController {
   final SelectedKidId = 0.obs;
   final SelectedKidName = ''.obs;
   var Isloading = false.obs;
+  var IsProductloading = false.obs;
   var RecommendedProductIsloading = false.obs;
 
   @override
@@ -27,14 +28,14 @@ class HomeController extends GetxController {
 
   getAllProductData(int school_id) async {
     try {
-      Isloading.value = true;
+      IsProductloading.value = true;
       final DataList = await AppService.getInstance.getAllProduct(school_id);
       // ProductList.value = MockData.dummyProducts;
       ProductList.value = DataList;
       print('ProductList: ${ProductList.length}');
-      Isloading.value = false;
+      IsProductloading.value = false;
     } catch (e) {
-      Isloading.value = false;
+      IsProductloading.value = false;
       print('error getPopulerProductData view model:$e');
     }
   }
