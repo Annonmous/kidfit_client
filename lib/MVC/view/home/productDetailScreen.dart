@@ -118,26 +118,30 @@ class ProductDetailsScreen extends StatelessWidget {
                                                 .SelectedKidId.value !=
                                             0) {
                                           var cartData = CartModel(
-                                              kid_Id: homeController
+                                              kidId: homeController
                                                   .SelectedKidId.value,
                                               parentId: 1,
-                                              product_id: ProductData.id,
-                                              product_name: ProductData.name,
-                                              product_image: ProductData.image,
-                                              Kid_name: homeController
-                                                  .SelectedKidName.value);
+                                              productId: ProductData.id,
+                                              productName: ProductData.name,
+                                              productImage: ProductData.image,
+                                              kidName: homeController
+                                                  .SelectedKidName.value,
+                                                  productPrice: ProductData.Price.toString(),
+                                              productIdsList:
+                                                  homeController.CartList.map(
+                                                      (e) => e.kidId).toList());
 
                                           var exists =
                                               homeController.CartList.where(
                                                   (e) =>
-                                                      e.Kid_name ==
-                                                          cartData.Kid_name &&
-                                                      e.kid_Id ==
-                                                          cartData.kid_Id &&
+                                                      e.kidName ==
+                                                          cartData.kidName &&
+                                                      e.kidId ==
+                                                          cartData.kidId &&
                                                       e.parentId ==
                                                           cartData.parentId &&
-                                                      e.product_id ==
-                                                          cartData.product_id);
+                                                      e.productId ==
+                                                          cartData.productId);
 
                                           if (exists.isEmpty) {
                                             homeController.addAndRemoveCart(

@@ -51,8 +51,7 @@ class CartScreen extends StatelessWidget {
                         () => Column(children: [
                           ...kidController.KidsList.map((e) => homeController
                                           .CartList
-                                      .where(
-                                          (element) => element.kid_Id == e.id)
+                                      .where((element) => element.kidId == e.id)
                                   .isEmpty
                               ? SizedBox()
                               : Padding(
@@ -92,7 +91,7 @@ class CartScreen extends StatelessWidget {
                                           ),
                                           ...homeController.CartList.where(
                                                   (element) =>
-                                                      element.kid_Id == e.id)
+                                                      element.kidId == e.id)
                                               .map((e) => Padding(
                                                     padding:
                                                         EdgeInsets.symmetric(
@@ -105,13 +104,13 @@ class CartScreen extends StatelessWidget {
                                                                     10.sp),
                                                         child: ImageWidget(
                                                           imageUrl:
-                                                              e.product_image,
+                                                              e.productImage,
                                                           height: 60.sp,
                                                           width: 60.sp,
                                                         ),
                                                       ),
                                                       title: Text(
-                                                        e.product_name,
+                                                        e.productName,
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontSize: 12.sp),
@@ -140,7 +139,9 @@ class CartScreen extends StatelessWidget {
                                               textColor: Colors.white,
                                               height: 30.sp,
                                               title: 'Checkout',
-                                              onTap: () {},
+                                              onTap: () {
+                                                print(homeController.CartList.map((e) => print(e)));
+                                              },
                                             ),
                                           )
                                         ]),
