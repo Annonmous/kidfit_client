@@ -58,7 +58,7 @@ class AppService {
         AuthResponse UserData = AuthResponse.fromJson(json);
 
         log("userEmail: ${UserData.data.email}");
-        _pref.insertUserData(UserData.data, UserData.accessToken);
+       await _pref.insertUserData(UserData.data, UserData.accessToken);
         Navigation.getInstance.pagePushAndReplaceNavigation(
             context,
             UserData.data.userRole == 'USER'
@@ -104,7 +104,7 @@ class AppService {
         AuthResponse UserData = AuthResponse.fromJson(json);
 
         log("userEmail: ${UserData.data.email}");
-        _pref.insertUserData(UserData.data, UserData.accessToken);
+      await  _pref.insertUserData(UserData.data, UserData.accessToken);
         Navigation.getInstance.pagePushAndReplaceNavigation(
             context,
             UserData.data.userRole == 'USER'

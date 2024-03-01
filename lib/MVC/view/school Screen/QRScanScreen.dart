@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foodeoapp/MVC/model/kidsModel.dart';
 import 'package:foodeoapp/components/spring_widget.dart';
 import 'package:foodeoapp/constant/theme.dart';
 import 'package:get/get.dart';
@@ -54,31 +55,38 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
           ),
         ],
       ),
-      floatingActionButton: SpringWidget(
-        onTap: () {
-          // Call a function to manually trigger QR code scanning
-          if (_qrViewController != null) {
-            _qrViewController!.pauseCamera();
-
-          }
-        },
-        child: CircleAvatar(
-          child: CircleAvatar(radius: 50, child: Icon(Icons.camera_alt)),
-        ),
-      ),
+      // floatingActionButton: SpringWidget(
+      //   onTap: () {
+      //     // Call a function to manually trigger QR code scanning
+      //     if (_qrViewController != null) {
+      //       _qrViewController!.pauseCamera();
+      //     }
+      //   },
+      //   child: CircleAvatar(
+      //     child: CircleAvatar(radius: 50, child: Icon(Icons.camera_alt)),
+      //   ),
+      // ),
     );
   }
 
   void _onQRViewCreated(QRViewController controller) {
-    setState(() {
-      _qrViewController = controller;
-    });
+    try {
+      setState(() {
+        _qrViewController = controller;
+      });
 
-    // controller.scannedDataStream.listen((scannedData) {
-    //   setState(() {
-    //     _scannedResult = scannedData as String;
-    //   });
-    // });
+      controller.scannedDataStream.listen((scannedData) {
+        setState(() {
+          var data = (scannedData.code! as List)
+              .map((data) => KidsModel.fromJson(data))
+              .toList();
+          _qrViewController!.pauseCamera();
+          print(data);
+        });
+      });
+    } catch (e) {
+      print('error while scanning: ${e}');
+    }
   }
 
   @override

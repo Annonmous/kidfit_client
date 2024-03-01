@@ -39,9 +39,12 @@ class SchoolHomeScreen extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    searchFilter('');
-    homeController.getAllProductData(int.parse(DataStroge.currentUserId.value));
     return GetBuilder<ThemeHelper>(
+        initState: (state) async {
+          searchFilter('');
+          await homeController
+              .getAllProductData(int.parse(DataStroge.currentUserId.value));
+        },
         builder: (themeController) => AnnotatedRegion(
               value: themeController.systemUiOverlayStyleForwhite,
               child: SafeArea(
@@ -51,58 +54,49 @@ class SchoolHomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: Constants.screenPadding),
                     child: Column(children: [
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 20.sp,
-                            ),
-                            CustomTextFieldWidget(
-                              enabled: true,
-                              label: '',
-                              controller: NameController,
-                              fieldColor: themeController.colorwhite,
-                              hintText: "Search Product..",
-                              inputType: TextInputType.name,
-                              focusNode: _NameFocusNode,
-                              onsubmit: () {},
-                              onchange: (value) {
-                                searchFilter(value);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 9,
-                        child: Obx(
-                          () => Container(
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10),
-                              itemCount: SearchProductList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                var list = SearchProductList;
-                                return SpringWidget(
-                                  onTap: () {
-                                    Navigation.getInstance.screenNavigation(
-                                        context,
-                                        ProductDetailsScreen(
-                                            ProductData: list[index]));
-                                  },
-                                  child: productcard(
-                                      image: list[index].image,
-                                      name: list[index].name,
-                                      price: list[index].Price.toString(),
-                                      SchoolImage: list[index].image),
-                                );
-                              },
-                            ),
+                      Column(
+                        children: [
+                         
+                          CustomTextFieldWidget(
+                            enabled: true,
+                            label: '',
+                            controller: NameController,
+                            fieldColor: themeController.colorwhite,
+                            hintText: "Search Product..",
+                            inputType: TextInputType.name,
+                            focusNode: _NameFocusNode,
+                            onsubmit: () {},
+                            onchange: (value) {
+                              searchFilter(value);
+                            },
                           ),
+                        ],
+                      ),
+                      Obx(
+                        () => GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10),
+                          itemCount: SearchProductList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var list = SearchProductList;
+                            return SpringWidget(
+                              onTap: () {
+                                Navigation.getInstance.screenNavigation(
+                                    context,
+                                    ProductDetailsScreen(
+                                        ProductData: list[index]));
+                              },
+                              child: productcard(
+                                  image: list[index].image,
+                                  name: list[index].name,
+                                  price: list[index].Price.toString(),
+                                  SchoolImage: list[index].image),
+                            );
+                          },
                         ),
                       ),
                     ]),

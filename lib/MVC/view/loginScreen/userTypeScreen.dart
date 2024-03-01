@@ -82,7 +82,7 @@ class _UserTypeScreenState extends State<UserTypeScreen> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                           image: AssetImage(
-                            'assets/images/logo.png'
+                            'assets/images/appicon.png'
                         // "assets/appicon.png",
                       ))),
                 ),

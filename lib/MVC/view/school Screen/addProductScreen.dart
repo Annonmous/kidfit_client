@@ -25,7 +25,7 @@ class AddProductScreen extends StatelessWidget {
   AddProductScreen({super.key});
 
   final internetController = Get.put(InternetController());
-  final kidsController = Get.put(KidsController());
+  
   final homeController = Get.put(HomeController());
   final getcontroller = Get.put(GetxControllersProvider());
   RxBool apihitting = false.obs;
@@ -33,13 +33,16 @@ class AddProductScreen extends StatelessWidget {
   final FocusNode _NameFocusNode = FocusNode();
   final PriceController = TextEditingController();
   final FocusNode _PriceFocusNode = FocusNode();
+    final descriptionController = TextEditingController();
+  final FocusNode _DescriptionFocusNode = FocusNode();
   final _formkey = GlobalKey<FormState>();
   final RxInt SelectedSchoolId = 0.obs;
   final RxString SelectedSchool = ''.obs;
   @override
   Widget build(BuildContext context) {
-    homeController.getAllSchools();
-    return GetBuilder<ThemeHelper>(builder: (themecontroller) {
+    return GetBuilder<ThemeHelper>(initState: (state) {
+      
+    }, builder: (themecontroller) {
       return AnnotatedRegion(
         value: themecontroller.systemUiOverlayStyleForwhite,
         child: SafeArea(
@@ -128,7 +131,7 @@ class AddProductScreen extends StatelessWidget {
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your Class No';
+                              return 'Please enter your Price';
                             }
 
                             return null;
@@ -137,19 +140,19 @@ class AddProductScreen extends StatelessWidget {
                         CustomTextFieldWidget(
                           enabled: true,
                           label: '',
-                          controller: PriceController,
+                          controller: descriptionController,
                           fieldColor: themecontroller.colorwhite,
                           hintText: "Description",
                           maxLines: 3,
                           inputType: TextInputType.name,
-                          focusNode: _PriceFocusNode,
+                          focusNode: _DescriptionFocusNode,
                           onsubmit: () {},
                           onchange: (value) {
                             apihitting.value = false;
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your Class No';
+                              return 'Please enter your Description';
                             }
 
                             return null;
