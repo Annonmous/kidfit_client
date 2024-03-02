@@ -39,13 +39,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
               child: Scaffold(
                 extendBody: true,
                 appBar: CustomAppBar(
-                    backgroundColor: _currentIndex == 3
+                    backgroundColor: _currentIndex == 2
                         ? themeController.colorPrimary
                         : themeController.bgcolor,
-                    leadingColor: _currentIndex == 3
+                    leadingColor: _currentIndex == 2
                         ? Colors.white
                         : themeController.colorPrimary,
-                    titleColor: _currentIndex == 3
+                    titleColor: _currentIndex == 2
                         ? Colors.white
                         : themeController.textcolor,
                     Title: _PageTitle(_currentIndex),
@@ -107,26 +107,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                             ),
                             label: 'Home'.tr,
                           ),
-                          BottomNavigationBarItem(
-                            icon: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: _currentIndex == 1
-                                  ? SvgPicture.asset(
-                                      "assets/icons/searchb.svg",
-                                      height: 20,
-                                      width: 20,
-                                    )
-                                  : SvgPicture.asset(
-                                      "assets/icons/search.svg",
-                                      height: 17,
-                                      width: 17,
-
-                                      color: themeController.bottomiconcolor,
-                                      // color: Theme.of(context).disabledColor,
-                                    ),
-                            ),
-                            label: 'Explore'.tr,
-                          ),
+                        
                           BottomNavigationBarItem(
                             icon: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -176,11 +157,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 0:
         return HomeScreen();
       case 1:
-        return SearchScreen();
-      case 2:
         return CartScreen();
-      case 3:
+      case 2:
         return ProfileScreen();
+
       default:
         return HomeScreen();
     }
@@ -191,11 +171,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
       case 0:
         return 'Explore';
       case 1:
-        return 'Saerch';
-      case 2:
         return 'Cart';
-      case 3:
+      case 2:
         return 'Profile';
+
       default:
         return 'Explore';
     }

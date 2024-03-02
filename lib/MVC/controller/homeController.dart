@@ -79,6 +79,20 @@ class HomeController extends GetxController {
     }
   }
 
+  CheckoutCart(
+      int kidId, int parentId, int schoolId, List<CartModel> cartData,BuildContext context) async {
+    try {
+      print('kidId: ${kidId}');
+      print('parentId: ${parentId}');
+      print('schoolId: ${schoolId}');
+      print('CartList: ${cartData.length}');
+      final DataList = await AppService.getInstance
+          .checkoutCart(kidId, parentId, schoolId, CartList,context);
+    } catch (e) {
+      print('error CheckoutCart HomeController:$e');
+    }
+  }
+
   // getSearchProduct(String search) async {
   //   try {
   //     RecommendedProductIsloading.value = true;
@@ -106,7 +120,7 @@ class HomeController extends GetxController {
       print('CartList: ${CartList.length}');
     } catch (e) {
       Isloading.value = false;
-      print('error AddKids view model:$e');
+      print('error addAndRemoveCart HomeController:$e');
     }
   }
 
@@ -114,6 +128,5 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
     ProductList.clear();
-    
   }
 }

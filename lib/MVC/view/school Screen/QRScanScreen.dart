@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodeoapp/MVC/model/kidsModel.dart';
@@ -15,7 +17,8 @@ class QRCodeScannerScreen extends StatefulWidget {
 class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? _qrViewController;
-  String _scannedResult = "Scan a QR code";
+  RxString _scannedResult = "".obs;
+  RxBool _cameraPause = false.obs;
   final themeController = Get.put(ThemeHelper());
 
   @override
@@ -45,14 +48,46 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(10.0),
-            color: Colors.white,
-            child: Text(
-              _scannedResult,
-              style: TextStyle(fontSize: 20.0),
-            ),
+          // Obx(
+          //   () => Container(
+          //     padding: EdgeInsets.all(10.0),
+          //     color: Colors.white,
+          //     child: Text(
+          //       _scannedResult.value,
+          //       textAlign: TextAlign.center,
+          //       style: TextStyle(fontSize: 10.sp),
+          //     ),
+          //   ),
+          // ),
+          SizedBox(
+            height: 20,
           ),
+          Obx(
+            () => _cameraPause.value
+                ? SpringWidget(
+                    onTap: () {
+                      _qrViewController!.resumeCamera();
+                      _cameraPause.value = false;
+                      _scannedResult.value = '';
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: themeController.colorPrimary,
+                      radius: 30.sp,
+                      child: Icon(
+                        Icons.refresh_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                : Container(
+                    padding: EdgeInsets.all(10.0),
+                    color: Colors.white,
+                    child: Text(
+                      'Scan a QR code',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
+          )
         ],
       ),
       // floatingActionButton: SpringWidget(
@@ -76,13 +111,25 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
       });
 
       controller.scannedDataStream.listen((scannedData) {
-        setState(() {
-          var data = (scannedData.code! as List)
-              .map((data) => KidsModel.fromJson(data))
-              .toList();
-          _qrViewController!.pauseCamera();
-          print(data);
+        _qrViewController!.pauseCamera();
+        _cameraPause.value = true;
+        _scannedResult.value = scannedData.code!;
+
+        List<String> keyValuePairs = _scannedResult.value
+            .replaceAll('{', '')
+            .replaceAll('}', '')
+            .split(', ');
+        Map<String, dynamic> data = {};
+        keyValuePairs.forEach((pair) {
+          List<String> parts = pair.split(': ');
+          data[parts[0]] = parts[1];
         });
+        String id = data['id'];
+        String parentId = data['parentId'];
+        String schoolId = data['schoolId'];
+        print('kid_id: $id');
+        print('parentId: $parentId');
+        print('schoolId: $schoolId');
       });
     } catch (e) {
       print('error while scanning: ${e}');

@@ -3,11 +3,13 @@ import 'package:dio/dio.dart';
 import 'package:dio/src/form_data.dart' as getFormData;
 import 'package:dio/src/multipart_file.dart' as getFormDataFile;
 import 'package:flutter/material.dart';
+import 'package:foodeoapp/MVC/model/CartModel.dart';
 import 'package:foodeoapp/MVC/model/kidsModel.dart';
 import 'package:foodeoapp/MVC/model/product_model.dart';
 import 'package:foodeoapp/MVC/model/userModel.dart';
 import 'package:foodeoapp/MVC/view/home/BottomNav.dart';
 import 'package:foodeoapp/MVC/view/school%20Screen/schoolBottomNav.dart';
+import 'package:foodeoapp/components/BrowserScreen.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/flutter_toast.dart';
 import 'package:foodeoapp/constant/navigation.dart';
@@ -58,7 +60,7 @@ class AppService {
         AuthResponse UserData = AuthResponse.fromJson(json);
 
         log("userEmail: ${UserData.data.email}");
-       await _pref.insertUserData(UserData.data, UserData.accessToken);
+        await _pref.insertUserData(UserData.data, UserData.accessToken);
         Navigation.getInstance.pagePushAndReplaceNavigation(
             context,
             UserData.data.userRole == 'USER'
@@ -104,7 +106,7 @@ class AppService {
         AuthResponse UserData = AuthResponse.fromJson(json);
 
         log("userEmail: ${UserData.data.email}");
-      await  _pref.insertUserData(UserData.data, UserData.accessToken);
+        await _pref.insertUserData(UserData.data, UserData.accessToken);
         Navigation.getInstance.pagePushAndReplaceNavigation(
             context,
             UserData.data.userRole == 'USER'
@@ -159,7 +161,7 @@ class AppService {
 
   Future<void> addProduct(BuildContext context, ProductModel Data) async {
     try {
-        final formData = getFormData.FormData();
+      final formData = getFormData.FormData();
       formData.fields.add(MapEntry('productsName', Data.name));
       formData.fields.add(MapEntry('productsPrice', Data.Price.toString()));
       formData.fields.add(MapEntry('schoolId', Data.schoolId.toString()));
@@ -168,9 +170,7 @@ class AppService {
         'image',
         await getFormDataFile.MultipartFile.fromFile(Data.image),
       ));
-      var response = await dio.post(Constants.AddProduct, data:formData);
-
-    
+      var response = await dio.post(Constants.AddProduct, data: formData);
 
       if (response.statusCode == 200) {
         log("addProduct API =>👌✅ ${response.statusCode}");
@@ -310,6 +310,42 @@ class AppService {
       FlutterToastDisplay.getInstance
           .showToast("${e.response!.data['message']}");
       return [];
+    }
+  }
+
+  Future<void> checkoutCart(
+      int kidId, int parentId, int schoolId, List<CartModel> cartData,BuildContext context) async {
+    try {
+      List<Map<String, dynamic>> cartList =
+          cartData.map((item) => item.toJson()).toList();
+var Data = {
+        "parentId": parentId,
+        "schoolId": schoolId,
+        "kidsId": kidId,
+        'products': cartList
+      };
+
+      print(Data);
+      var response = await dio.post(Constants.checkoutCart, data: Data);
+
+      if (response.statusCode == 200) {
+        log("checkoutCart API =>${response.data['success']}👌✅");
+        final json = response.data;
+        Navigation.getInstance.screenNavigation(context, BrowserScreen(url: json));
+      } else {
+        print('Unknown Error Occurred ${(response.data['message'])} ');
+        FlutterToastDisplay.getInstance
+            .showToast("${response.data['message']}");
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        FlutterToastDisplay.getInstance
+            .showToast("${e.response!.data['message']}");
+        print("Error msg data: ${e.response!.data['message']}");
+      } else {
+        print("Error sending data: $e");
+      }
+      print(e);
     }
   }
 }

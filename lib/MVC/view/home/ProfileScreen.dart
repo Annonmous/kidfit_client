@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foodeoapp/MVC/view/loginScreen/LoginWithEmailScreen.dart';
+import 'package:foodeoapp/MVC/view/school%20Screen/addProductScreen.dart';
 import 'package:foodeoapp/components/image_widget.dart';
 import 'package:foodeoapp/constant/constants.dart';
 import 'package:foodeoapp/constant/navigation.dart';
@@ -130,16 +131,31 @@ class ProfileScreen extends StatelessWidget {
                                   letterSpacing: 1.sp),
                             ),
                           ),
-                          ListTile(
-                            leading: Text(
-                              'children List',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1.sp),
-                            ),
-                          ),
+                          DataStroge.userRole.value == 'SCHOOL'
+                              ? ListTile(
+                                  leading: Text(
+                                    'Add Product',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.sp),
+                                      
+                                  ),
+                                  onTap: () {
+                                    Navigation.getInstance.screenNavigation(context, AddProductScreen());
+                                  },
+                                )
+                              : ListTile(
+                                  leading: Text(
+                                    'children List',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.sp),
+                                  ),
+                                ),
                           ListTile(
                             leading: Text(
                               'Change Password',

@@ -118,18 +118,20 @@ class ProductDetailsScreen extends StatelessWidget {
                                                 .SelectedKidId.value !=
                                             0) {
                                           var cartData = CartModel(
-                                              kidId: homeController
-                                                  .SelectedKidId.value,
-                                              parentId: 1,
-                                              productId: ProductData.id,
-                                              productName: ProductData.name,
-                                              productImage: ProductData.image,
-                                              kidName: homeController
-                                                  .SelectedKidName.value,
-                                                  productPrice: ProductData.Price.toString(),
-                                              productIdsList:
-                                                  homeController.CartList.map(
-                                                      (e) => e.kidId).toList());
+                                            kidId: homeController
+                                                .SelectedKidId.value,
+                                            parentId: int.parse(
+                                                DataStroge.currentUserId.value),
+                                            schoolId: ProductData.schoolId,
+                                            productId: ProductData.id,
+                                            quantity: 1,
+                                            productName: ProductData.name,
+                                            productImage: ProductData.image,
+                                            kidName: homeController
+                                                .SelectedKidName.value,
+                                            productPrice:
+                                                ProductData.Price.toString(),
+                                          );
 
                                           var exists =
                                               homeController.CartList.where(

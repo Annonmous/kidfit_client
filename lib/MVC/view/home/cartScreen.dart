@@ -49,10 +49,10 @@ class CartScreen extends StatelessWidget {
                   : SingleChildScrollView(
                       child: Obx(
                         () => Column(children: [
-                          ...kidController.KidsList.map((e) => homeController
-                                          .CartList
-                                      .where((element) => element.kidId == e.id)
-                                  .isEmpty
+                          ...kidController
+                              .KidsList.map((kidData) => homeController.CartList
+                                  .where((element) =>
+                                      element.kidId == kidData.id).isEmpty
                               ? SizedBox()
                               : Padding(
                                   padding:
@@ -83,7 +83,7 @@ class CartScreen extends StatelessWidget {
                                                 horizontal: 20.sp,
                                                 vertical: 10.sp),
                                             child: Text(
-                                              e.name,
+                                              kidData.name,
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 18.sp),
@@ -91,8 +91,9 @@ class CartScreen extends StatelessWidget {
                                           ),
                                           ...homeController.CartList.where(
                                                   (element) =>
-                                                      element.kidId == e.id)
-                                              .map((e) => Padding(
+                                                      element.kidId ==
+                                                      kidData.id)
+                                              .map((cart) => Padding(
                                                     padding:
                                                         EdgeInsets.symmetric(
                                                             vertical: 10.sp),
@@ -104,13 +105,13 @@ class CartScreen extends StatelessWidget {
                                                                     10.sp),
                                                         child: ImageWidget(
                                                           imageUrl:
-                                                              e.productImage,
+                                                              cart.productImage,
                                                           height: 60.sp,
                                                           width: 60.sp,
                                                         ),
                                                       ),
                                                       title: Text(
-                                                        e.productName,
+                                                        '${cart.productName}',
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontSize: 12.sp),
@@ -119,7 +120,7 @@ class CartScreen extends StatelessWidget {
                                                         onTap: () {
                                                           homeController
                                                               .addAndRemoveCart(
-                                                                  e, 0);
+                                                                  cart, 0);
                                                         },
                                                         child: Icon(
                                                           Icons.delete,
@@ -140,7 +141,12 @@ class CartScreen extends StatelessWidget {
                                               height: 30.sp,
                                               title: 'Checkout',
                                               onTap: () {
-                                                print(homeController.CartList.map((e) => print(e)));
+                                                homeController.CheckoutCart(
+                                                    kidData.id,
+                                                    kidData.parentId,
+                                                    kidData.schoolId,
+                                                    homeController.CartList,
+                                                    context);
                                               },
                                             ),
                                           )

@@ -10,6 +10,6 @@ class Constants {
   static final GetAllSchool = "$API_HOST/auth/get-all-school";
   static final addChild = "$API_HOST/auth/create-child";
   static final getAllChild = "$API_HOST/auth/get-all-child";
-  
+  static final checkoutCart = "$API_HOST/auth/create-checkout-session";
 
 }

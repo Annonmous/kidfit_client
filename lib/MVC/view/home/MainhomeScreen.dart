@@ -31,156 +31,144 @@ class HomeScreen extends StatelessWidget {
                   body: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: Constants.screenPadding),
-                    child: Column(children: [
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 20.sp,
-                            ),
-                            SpringWidget(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Dialog(child:
-                                        GetBuilder<ThemeHelper>(
-                                            builder: (themecontroller) {
-                                      return Container(
-                                        height: 300.sp,
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              if (kidController
-                                                  .KidsList.isNotEmpty)
-                                                SizedBox(
-                                                  height: 30.sp,
-                                                ),
-                                              if (kidController
-                                                  .KidsList.isNotEmpty)
-                                                Text(
-                                                  'Select Child',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 16.sp,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                              if (kidController
-                                                  .KidsList.isNotEmpty)
-                                                SizedBox(
-                                                  height: 30.sp,
-                                                ),
-                                              Obx(
-                                                () =>
-                                                    kidController
-                                                            .KidsList.isEmpty
-                                                        ? Text(
-                                                            'No children added yet',
-                                                            style: TextStyle(
-                                                                color: themeController
-                                                                    .colorPrimary),
-                                                          )
-                                                        : Container(
-                                                            height: 200.sp,
-                                                            child: ListView
-                                                                .builder(
-                                                              itemCount:
-                                                                  kidController
-                                                                      .KidsList
-                                                                      .length,
-                                                              itemBuilder:
-                                                                  (BuildContext
-                                                                          context,
-                                                                      int index) {
-                                                                return SpringWidget(
-                                                                  onTap: () {
-                                                                    homeController
-                                                                            .SelectedKidId
-                                                                            .value =
-                                                                        kidController
-                                                                            .KidsList[index]
-                                                                            .id;
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Column(children: [
+                        SizedBox(
+                          height: 20.sp,
+                        ),
+                        SpringWidget(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(child: GetBuilder<ThemeHelper>(
+                                    builder: (themecontroller) {
+                                  return Container(
+                                    height: 300.sp,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          if (kidController.KidsList.isNotEmpty)
+                                            SizedBox(
+                                              height: 30.sp,
+                                            ),
+                                          if (kidController.KidsList.isNotEmpty)
+                                            Text(
+                                              'Select Child',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          if (kidController.KidsList.isNotEmpty)
+                                            SizedBox(
+                                              height: 30.sp,
+                                            ),
+                                          Obx(
+                                            () => kidController.KidsList.isEmpty
+                                                ? Text(
+                                                    'No children added yet',
+                                                    style: TextStyle(
+                                                        color: themeController
+                                                            .colorPrimary),
+                                                  )
+                                                : Container(
+                                                    height: 200.sp,
+                                                    child: ListView.builder(
+                                                      itemCount: kidController
+                                                          .KidsList.length,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return SpringWidget(
+                                                          onTap: () {
+                                                            homeController
+                                                                    .SelectedKidId
+                                                                    .value =
+                                                                kidController
+                                                                    .KidsList[
+                                                                        index]
+                                                                    .id;
 
-                                                                    homeController
-                                                                            .SelectedKidName
-                                                                            .value =
-                                                                        kidController
-                                                                            .KidsList[index]
-                                                                            .name;
+                                                            homeController
+                                                                    .SelectedKidName
+                                                                    .value =
+                                                                kidController
+                                                                    .KidsList[
+                                                                        index]
+                                                                    .name;
 
-                                                                    homeController.getAllProductData(kidController
+                                                            homeController
+                                                                .getAllProductData(
+                                                                    kidController
                                                                         .KidsList[
                                                                             index]
                                                                         .schoolId);
 
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  child:
-                                                                      ListTile(
-                                                                    title: Text(kidController
-                                                                        .KidsList[
-                                                                            index]
-                                                                        .name),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ),
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: ListTile(
+                                                            title: Text(
+                                                                kidController
+                                                                    .KidsList[
+                                                                        index]
+                                                                    .name),
                                                           ),
-                                              )
-                                            ]),
-                                      );
-                                    }));
-                                  },
-                                );
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                          )
+                                        ]),
+                                  );
+                                }));
                               },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.white),
-                                child: ListTile(
-                                  leading: Icon(
-                                    Icons.search,
-                                    color: themeController.colorIcon
-                                        .withOpacity(0.4),
-                                  ),
-                                  title: Obx(
-                                    () => Text(
-                                      homeController.SelectedKidName.value == ''
-                                          ? 'Select Children..'
-                                          : homeController
-                                              .SelectedKidName.value,
-                                      style: TextStyle(
-                                          color: themeController.textcolor,
-                                          fontSize: 12.sp),
-                                    ),
-                                  ),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white),
+                            child: ListTile(
+                              leading: Icon(
+                                Icons.search,
+                                color:
+                                    themeController.colorIcon.withOpacity(0.4),
+                              ),
+                              title: Obx(
+                                () => Text(
+                                  homeController.SelectedKidName.value == ''
+                                      ? 'Select Children..'
+                                      : homeController.SelectedKidName.value,
+                                  style: TextStyle(
+                                      color: themeController.textcolor,
+                                      fontSize: 12.sp),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'recommended For You 🔥',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600),
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  'recommended For You 🔥',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            )
                           ],
                         ),
-                      ),
-                      Expanded(
-                        flex: 9,
-                        child: Obx(
+                        SizedBox(
+                          height: 10.sp,
+                        ),
+                        Obx(
                           () => homeController.IsProductloading.isTrue
                               ? SmallLoader()
                               : homeController.ProductList.isEmpty
@@ -196,6 +184,8 @@ class HomeScreen extends StatelessWidget {
                                     )
                                   : Container(
                                       child: GridView.builder(
+                                        shrinkWrap: true,
+                                        primary: false,
                                         gridDelegate:
                                             const SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: 2,
@@ -227,8 +217,11 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                         ),
-                      ),
-                    ]),
+                        SizedBox(
+                          height: 30.sp,
+                        )
+                      ]),
+                    ),
                   ),
                 ),
               ),
