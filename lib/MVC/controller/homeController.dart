@@ -3,6 +3,8 @@ import 'package:foodeoapp/MVC/model/CartModel.dart';
 import 'package:foodeoapp/MVC/model/ExploreModel.dart';
 import 'package:foodeoapp/MVC/model/kidsModel.dart';
 import 'package:foodeoapp/MVC/model/product_model.dart';
+import 'package:foodeoapp/components/BrowserScreen.dart';
+import 'package:foodeoapp/constant/navigation.dart';
 import 'package:foodeoapp/data/mockData.dart';
 import 'package:foodeoapp/helper/data_storage.dart';
 import 'package:foodeoapp/services/app_service.dart';
@@ -79,15 +81,17 @@ class HomeController extends GetxController {
     }
   }
 
-  CheckoutCart(
-      int kidId, int parentId, int schoolId, List<CartModel> cartData,BuildContext context) async {
+  CheckoutCart(int kidId, int parentId, int schoolId, List<CartModel> cartData,
+      BuildContext context) async {
     try {
       print('kidId: ${kidId}');
       print('parentId: ${parentId}');
       print('schoolId: ${schoolId}');
       print('CartList: ${cartData.length}');
-      final DataList = await AppService.getInstance
-          .checkoutCart(kidId, parentId, schoolId, CartList,context);
+      final Url = await AppService.getInstance
+          .checkoutCart(kidId, parentId, schoolId, CartList, context);
+      CartList.removeWhere((e) => e.kidId == kidId);
+      Navigation.getInstance.screenNavigation(context, BrowserScreen(url: Url));
     } catch (e) {
       print('error CheckoutCart HomeController:$e');
     }

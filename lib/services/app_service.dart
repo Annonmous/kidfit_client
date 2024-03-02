@@ -313,12 +313,12 @@ class AppService {
     }
   }
 
-  Future<void> checkoutCart(
-      int kidId, int parentId, int schoolId, List<CartModel> cartData,BuildContext context) async {
+  Future<String> checkoutCart(int kidId, int parentId, int schoolId,
+      List<CartModel> cartData, BuildContext context) async {
     try {
       List<Map<String, dynamic>> cartList =
           cartData.map((item) => item.toJson()).toList();
-var Data = {
+      var Data = {
         "parentId": parentId,
         "schoolId": schoolId,
         "kidsId": kidId,
@@ -330,22 +330,27 @@ var Data = {
 
       if (response.statusCode == 200) {
         log("checkoutCart API =>${response.data['success']}👌✅");
-        final json = response.data;
-        Navigation.getInstance.screenNavigation(context, BrowserScreen(url: json));
+        final json = response.data['message'];
+        // Navigation.getInstance
+        //     .screenNavigation(context, BrowserScreen(url: json));
+        return json;
       } else {
         print('Unknown Error Occurred ${(response.data['message'])} ');
         FlutterToastDisplay.getInstance
             .showToast("${response.data['message']}");
+            return '';
       }
     } on DioException catch (e) {
       if (e.response != null) {
         FlutterToastDisplay.getInstance
             .showToast("${e.response!.data['message']}");
         print("Error msg data: ${e.response!.data['message']}");
+        
       } else {
         print("Error sending data: $e");
       }
       print(e);
+      return '';
     }
   }
 }
